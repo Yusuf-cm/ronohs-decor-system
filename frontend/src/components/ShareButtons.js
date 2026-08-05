@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 
 export default function ShareButtons({ title, url }) {
-    if (!url) return null;
+    // Hooks must run on every render, so they have to come before any early
+    // return - bailing out on a missing `url` first changed the hook order
+    // between renders and could crash React.
     const [currentUrl, setCurrentUrl] = useState('');
 
     // This effect runs only on the client-side, after the component has mounted
@@ -11,6 +13,8 @@ export default function ShareButtons({ title, url }) {
         // Now it's safe to access window.location.href
         setCurrentUrl(window.location.href);
     }, []);
+
+    if (!url) return null;
 
     // If the URL hasn't been set yet (during server render or initial client load),
     // we can return nothing or a placeholder to avoid errors.
