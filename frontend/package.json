@@ -18,7 +18,7 @@
     "framer-motion": "^12.23.5",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
-    "next": "15.3.5",
+    "next": "15.5.22",
     "nextjs-toploader": "^3.8.16",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -35,7 +35,7 @@
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "eslint": "^9",
-    "eslint-config-next": "15.3.5",
+    "eslint-config-next": "15.5.22",
     "tailwindcss": "^4"
   }
 }
