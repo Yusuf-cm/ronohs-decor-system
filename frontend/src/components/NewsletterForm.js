@@ -15,17 +15,7 @@ export default function NewsletterForm() {
             return;
         }
 
-        setIsLoading(true);
-
-        // In a real app, you would have an API endpoint for this.
-        // For now, we simulate the action with a delay.
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        console.log(`Subscribed with: ${email}`);
-        toast.success('Thank you for subscribing!');
-
-        setEmail('');
-        setIsLoading(false);
+        toast('Newsletter signups are not available yet. Contact us for updates.');
     };
 
     return (

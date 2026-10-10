@@ -21,8 +21,8 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 export default function CheckoutPage() {
   const [clientSecret, setClientSecret] = useState('');
   const [orderId, setOrderId] = useState(null);
-  const { cartItems, cartTotal, removeFromCart, updateQuantity } = useCart();
-  const { user, authTokens, setAuthTokens, logoutUser } = useAuth();
+  const { cartItems, cartTotal, removeFromCart, updateQuantity, hydrated } = useCart();
+  const { user, authTokens, setAuthTokens, logoutUser, loading: authLoading } = useAuth();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
@@ -63,14 +63,15 @@ export default function CheckoutPage() {
   }, [user]);
 
   useEffect(() => {
-    if (cartItems.length === 0 && !isValidating && !paymentComplete) {
+    if (hydrated && !authLoading && cartItems.length === 0 && !isValidating && !paymentComplete) {
       toast.error('Your cart is empty!');
       router.push('/products');
     }
-  }, [cartItems, isValidating, paymentComplete, router]);
+  }, [cartItems, hydrated, authLoading, isValidating, paymentComplete, router]);
 
 
   useEffect(() => {
+    if (authLoading || !hydrated) return;
     if (!authTokens) {
         if (!user && !isValidating) { // Prevent redirection while auth is still loading
              router.push('/login?next=/cart/checkout');
@@ -118,7 +119,7 @@ export default function CheckoutPage() {
     };
 
     validateCart();
-  }, [cartItems, authTokens, setAuthTokens, logoutUser, removeFromCart, updateQuantity, user, isValidating]);
+  }, [cartItems, authTokens, setAuthTokens, logoutUser, removeFromCart, updateQuantity, user, authLoading, hydrated]);
 
 
   const [formErrors, setFormErrors] = useState({});

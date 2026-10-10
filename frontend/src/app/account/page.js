@@ -103,7 +103,7 @@ const OrderCard = ({ order }) => {
         </div>
         <div className="flex items-center gap-3">
           <p className="font-semibold text-lg text-gray-900">
-            Ksh{Number(order.get_total_cost).toFixed(2)}
+            Ksh{Number(order.grand_total).toFixed(2)}
           </p>
           <StatusBadge paid={order.paid} />
           <ChevronIcon expanded={expanded} />
@@ -322,7 +322,7 @@ const ErrorMessage = ({ error, onRetry }) => (
 );
 
 export default function AccountPage() {
-    const { user, authTokens, logoutUser, setAuthTokens } = useAuth();
+    const { user, authTokens, logoutUser, setAuthTokens, loading: authLoading } = useAuth();
     const router = useRouter();
 
     const [orders, setOrders] = useState([]);
@@ -337,7 +337,7 @@ export default function AccountPage() {
             setError('');
             const api = getAuthenticatedApi({ authTokens, setAuthTokens, logoutUser });
             const data = await api('/orders/history/');
-            setOrders(data);
+            setOrders(Array.isArray(data) ? data : data.results || []);
         } catch (err) {
             console.error("Failed to fetch order history:", err);
             setError('Could not load your order history. Please try again later.');
@@ -347,12 +347,13 @@ export default function AccountPage() {
     }, [user, authTokens, setAuthTokens, logoutUser]);
 
     useEffect(() => {
+        if (authLoading) return;
         if (!user) {
             router.push('/login');
             return;
         }
         fetchOrderHistory();
-    }, [user, router, fetchOrderHistory]);
+    }, [user, authLoading, router, fetchOrderHistory]);
 
     const handleLogout = () => {
         logoutUser();

@@ -25,7 +25,7 @@ async function getProduct(id) {
 }
 
 export async function generateMetadata({ params }) {
-    const product = await getProduct(params.id);
+    const product = await getProduct((await params).id);
     if (!product) {
         return {
             title: 'Product Not Found',
@@ -33,12 +33,12 @@ export async function generateMetadata({ params }) {
     }
     return {
         title: `${product.name} | Ronohs Decor`,
-        description: product.description.substring(0, 160),
+        description: (product.description || product.name).substring(0, 160),
     };
 }
 
 export default async function ProductDetailPage({ params }) {
-    const { id } = params;
+    const { id } = await params;
     const product = await getProduct(id);
 
     if (!product) {
@@ -82,7 +82,7 @@ export default async function ProductDetailPage({ params }) {
 
                     {/* Product Info */}
                     <div>
-                        <p className="text-sm font-medium text-emerald-600">{product.category.name}</p>
+                        <p className="text-sm font-medium text-emerald-600">{product.category?.name || 'Collection'}</p>
                         <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 font-serif tracking-tight">{product.name}</h1>
 
                         <div className="mt-4 flex items-center">

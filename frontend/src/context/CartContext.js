@@ -26,7 +26,7 @@ export const CartProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to parse cart items from localStorage", error);
       // Clear corrupted data
-      localStorage.removeItem('cartItems');
+      try { localStorage.removeItem('cartItems'); } catch { /* Storage unavailable. */ }
     }
     setHydrated(true);
   }, []);
@@ -82,7 +82,7 @@ const clearCart = useCallback(() => {
   setCartItems([]);
 
   // 2. Explicitly remove the item from localStorage immediately
-  localStorage.removeItem('cartItems');
+  try { localStorage.removeItem('cartItems'); } catch { /* Storage unavailable. */ }
 }, []); // The dependency array remains empty
 
   // --- STEP 3: Memoize the calculated total (optional but good practice) ---
@@ -91,6 +91,7 @@ const clearCart = useCallback(() => {
   // --- STEP 4: Define the context value ---
  const value = {
     cartItems,
+    hydrated,
     addToCart,
     removeFromCart,
     updateQuantity,

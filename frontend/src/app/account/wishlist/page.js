@@ -10,7 +10,7 @@ import { FiHeart, FiX } from 'react-icons/fi';
 import ProductCard from '@/components/ProductCard'; // We can reuse the product card
 
 const WishlistPage = () => {
-    const { user, authTokens, logoutUser, setAuthTokens } = useAuth();
+    const { user, authTokens, logoutUser, setAuthTokens, loading: authLoading } = useAuth();
     const router = useRouter();
 
     const [wishlist, setWishlist] = useState(null);
@@ -35,12 +35,13 @@ const WishlistPage = () => {
     }, [user, authTokens, setAuthTokens, logoutUser]);
 
     useEffect(() => {
+        if (authLoading) return;
         if (!user) {
             router.push('/login?next=/account/wishlist');
             return;
         }
         fetchWishlist();
-    }, [user, router, fetchWishlist]);
+    }, [user, authLoading, router, fetchWishlist]);
 
     const handleRemoveFromWishlist = async (productId) => {
         if (!authTokens) return;
