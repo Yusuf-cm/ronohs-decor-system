@@ -11,14 +11,14 @@ import 'react-loading-skeleton/dist/skeleton.css';
 // Enhanced Stat Card with animations
 const StatCard = ({ title, value, icon, color = 'indigo', isLoading = false }) => {
   const colorClasses = {
-    indigo: 'bg-indigo-500',
+    indigo: 'bg-emerald-500',
     green: 'bg-green-500',
     amber: 'bg-amber-500',
     red: 'bg-red-500',
   };
-  
+
   const textColors = {
-    indigo: 'text-indigo-600',
+    indigo: 'text-emerald-600',
     green: 'text-green-600',
     amber: 'text-amber-600',
     red: 'text-red-600',
@@ -41,7 +41,7 @@ const StatCard = ({ title, value, icon, color = 'indigo', isLoading = false }) =
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden"
       whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300 }}
@@ -73,8 +73,8 @@ const CustomTooltip = ({ active, payload, label }) => {
         <div className="mt-2 space-y-1">
           {payload.map((entry, index) => (
             <div key={index} className="flex items-center">
-              <div 
-                className="w-3 h-3 rounded-full mr-2" 
+              <div
+                className="w-3 h-3 rounded-full mr-2"
                 style={{ backgroundColor: entry.color }}
               ></div>
               <span className="text-sm font-medium text-gray-600 capitalize">{entry.name}:</span>
@@ -99,7 +99,7 @@ const DashboardSkeleton = () => (
         </div>
         <div className="h-10 bg-gray-200 rounded w-56 mt-4 sm:mt-0"></div>
       </div>
-      
+
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         {[1,2,3,4].map(i => (
           <div key={i} className="bg-white p-5 rounded-xl h-28">
@@ -113,9 +113,9 @@ const DashboardSkeleton = () => (
           </div>
         ))}
       </div>
-      
+
       <div className="h-80 bg-gray-200 rounded-xl mb-8"></div>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="h-96 bg-gray-200 rounded-xl"></div>
         <div className="h-96 bg-gray-200 rounded-xl"></div>
@@ -167,11 +167,11 @@ export default function AdminDashboardPage() {
   };
 
   if (loading && !isRefreshing) return <DashboardSkeleton />;
-  
+
   if (error && !stats) {
     return (
       <div className="bg-gray-50 min-h-screen p-8 flex items-center justify-center">
-        <motion.div 
+        <motion.div
           className="max-w-md text-center bg-white p-8 rounded-xl shadow-lg"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -184,9 +184,9 @@ export default function AdminDashboardPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Error Loading Dashboard</h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button 
+            <button
               onClick={() => fetchStats(timeRange)}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition flex items-center justify-center"
+              className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition flex items-center justify-center"
               disabled={isRefreshing}
             >
               {isRefreshing ? (
@@ -199,8 +199,8 @@ export default function AdminDashboardPage() {
                 </>
               ) : 'Retry'}
             </button>
-            <a 
-              href="/admin/dashboard" 
+            <a
+              href="/admin/dashboard"
               className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition flex items-center justify-center"
             >
               Refresh Page
@@ -236,12 +236,12 @@ export default function AdminDashboardPage() {
   const totalRevenue = stats.total_revenue ? parseFloat(stats.total_revenue).toLocaleString('en-US') : '0';
   const totalProfit = stats.total_profit ? parseFloat(stats.total_profit).toLocaleString('en-US') : '0';
   const inventoryValue = stats.total_inventory_value ? parseFloat(stats.total_inventory_value).toLocaleString('en-US') : '0';
-  
+
   return (
     <div className="bg-gray-50 min-h-screen p-4 sm:p-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
         <div>
-          <motion.h1 
+          <motion.h1
             className="text-3xl font-bold text-gray-900 font-serif"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -250,7 +250,7 @@ export default function AdminDashboardPage() {
           </motion.h1>
           <p className="text-gray-600 mt-1">Overview of your store's performance.</p>
         </div>
-        
+
         <div className="flex flex-wrap gap-3 mt-4 sm:mt-0">
           <div className="flex space-x-1 bg-white p-1 rounded-lg shadow-sm border">
             {[{label: '7 Days', value: '7'}, {label: '30 Days', value: '30'}, {label: '90 Days', value: '90'}].map(range => (
@@ -259,7 +259,7 @@ export default function AdminDashboardPage() {
                 onClick={() => handleTimeRangeChange(range.value)}
                 className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                   timeRange === range.value
-                    ? 'bg-indigo-600 text-white shadow'
+                    ? 'bg-emerald-600 text-white shadow'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
@@ -267,17 +267,17 @@ export default function AdminDashboardPage() {
               </button>
             ))}
           </div>
-          
-          <button 
+
+          <button
             onClick={() => fetchStats(timeRange)}
             className="flex items-center px-3 py-1.5 text-sm font-medium bg-white text-gray-600 hover:bg-gray-100 rounded-md border shadow-sm transition-colors"
             disabled={isRefreshing}
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className={`h-4 w-4 mr-1 ${isRefreshing ? 'animate-spin' : ''}`} 
-              fill="none" 
-              viewBox="0 0 24 24" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`h-4 w-4 mr-1 ${isRefreshing ? 'animate-spin' : ''}`}
+              fill="none"
+              viewBox="0 0 24 24"
               stroke="currentColor"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -286,57 +286,57 @@ export default function AdminDashboardPage() {
           </button>
         </div>
       </div>
-      
+
       {/* Stat Cards */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-        <StatCard 
-          title="Total Revenue" 
-          value={`Ksh ${totalRevenue}`} 
+        <StatCard
+          title="Total Revenue"
+          value={`Ksh ${totalRevenue}`}
           color="indigo"
           isLoading={isRefreshing}
           icon={
             <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01" />
             </svg>
-          } 
+          }
         />
-        <StatCard 
-          title="Total Profit" 
-          value={`Ksh ${totalProfit}`} 
+        <StatCard
+          title="Total Profit"
+          value={`Ksh ${totalProfit}`}
           color="green"
           isLoading={isRefreshing}
           icon={
             <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-          } 
+          }
         />
-        <StatCard 
-          title="Total Orders" 
-          value={stats.total_orders ? stats.total_orders.toLocaleString() : '0'} 
+        <StatCard
+          title="Total Orders"
+          value={stats.total_orders ? stats.total_orders.toLocaleString() : '0'}
           color="amber"
           isLoading={isRefreshing}
           icon={
             <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-          } 
+          }
         />
-        <StatCard 
-          title="Inventory Value" 
-          value={`Ksh ${inventoryValue}`} 
+        <StatCard
+          title="Inventory Value"
+          value={`Ksh ${inventoryValue}`}
           color="red"
           isLoading={isRefreshing}
           icon={
             <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
             </svg>
-          } 
+          }
         />
       </div>
 
       {/* Chart Section */}
-      <motion.div 
+      <motion.div
         className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mb-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -346,14 +346,14 @@ export default function AdminDashboardPage() {
           <h2 className="text-xl font-semibold text-gray-900 font-serif">
             {activeTab === 'sales' ? 'Sales Performance' : 'Orders & Customers'} ({timeRange} Days)
           </h2>
-          
+
           <div className="flex flex-wrap gap-3 mt-3 sm:mt-0">
             <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
               <button
                 onClick={() => setActiveTab('sales')}
                 className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                   activeTab === 'sales'
-                    ? 'bg-indigo-600 text-white shadow'
+                    ? 'bg-emerald-600 text-white shadow'
                     : 'text-gray-600 hover:bg-gray-200'
                 }`}
               >
@@ -363,19 +363,19 @@ export default function AdminDashboardPage() {
                 onClick={() => setActiveTab('orders')}
                 className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                   activeTab === 'orders'
-                    ? 'bg-indigo-600 text-white shadow'
+                    ? 'bg-emerald-600 text-white shadow'
                     : 'text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 Orders
               </button>
             </div>
-            
+
             <div className="flex items-center">
               {activeTab === 'sales' ? (
                 <>
                   <div className="flex items-center mr-4">
-                    <div className="w-3 h-3 bg-indigo-500 rounded-full mr-2"></div>
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full mr-2"></div>
                     <span className="text-sm text-gray-600">Revenue</span>
                   </div>
                   <div className="flex items-center">
@@ -386,7 +386,7 @@ export default function AdminDashboardPage() {
               ) : (
                 <>
                   <div className="flex items-center mr-4">
-                    <div className="w-3 h-3 bg-indigo-500 rounded-full mr-2"></div>
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full mr-2"></div>
                     <span className="text-sm text-gray-600">Orders</span>
                   </div>
                   <div className="flex items-center">
@@ -398,7 +398,7 @@ export default function AdminDashboardPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             {activeTab === 'sales' ? (
@@ -415,57 +415,57 @@ export default function AdminDashboardPage() {
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                 <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 12 }} axisLine={false} tickLine={false} />
-                <YAxis 
-                  tick={{ fill: '#6b7280', fontSize: 12 }} 
-                  tickFormatter={(value) => `Ksh ${value >= 1000 ? `${value/1000}k` : value}`} 
-                  axisLine={false} 
-                  tickLine={false} 
+                <YAxis
+                  tick={{ fill: '#6b7280', fontSize: 12 }}
+                  tickFormatter={(value) => `Ksh ${value >= 1000 ? `${value/1000}k` : value}`}
+                  axisLine={false}
+                  tickLine={false}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                <Area 
-                  type="monotone" 
-                  dataKey="Revenue" 
+                <Area
+                  type="monotone"
+                  dataKey="Revenue"
                   name="Revenue"
-                  stroke="#4f46e5" 
-                  strokeWidth={2} 
-                  fillOpacity={1} 
-                  fill="url(#colorRevenue)" 
+                  stroke="#4f46e5"
+                  strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#colorRevenue)"
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="Profit" 
+                <Area
+                  type="monotone"
+                  dataKey="Profit"
                   name="Profit"
-                  stroke="#10b981" 
-                  strokeWidth={2} 
-                  fillOpacity={1} 
-                  fill="url(#colorProfit)" 
+                  stroke="#10b981"
+                  strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#colorProfit)"
                 />
               </AreaChart>
             ) : (
               <BarChart data={orderData} margin={{ top: 10, right: 30, left: 20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                 <XAxis dataKey="name" tick={{ fill: '#6b7280', fontSize: 12 }} axisLine={false} tickLine={false} />
-                <YAxis 
-                  tick={{ fill: '#6b7280', fontSize: 12 }} 
-                  axisLine={false} 
-                  tickLine={false} 
+                <YAxis
+                  tick={{ fill: '#6b7280', fontSize: 12 }}
+                  axisLine={false}
+                  tickLine={false}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar 
-                  dataKey="Orders" 
+                <Bar
+                  dataKey="Orders"
                   name="Orders"
-                  fill="#4f46e5" 
+                  fill="#4f46e5"
                   radius={[4, 4, 0, 0]}
                 />
-                <Bar 
-                  dataKey="Customers" 
+                <Bar
+                  dataKey="Customers"
                   name="Customers"
-                  fill="#f59e0b" 
+                  fill="#f59e0b"
                   radius={[4, 4, 0, 0]}
                 />
-                <Legend 
-                  iconType="circle" 
-                  iconSize={10} 
+                <Legend
+                  iconType="circle"
+                  iconSize={10}
                   wrapperStyle={{ paddingTop: '10px' }}
                   formatter={(value) => <span className="text-gray-600 text-sm">{value}</span>}
                 />
@@ -486,8 +486,8 @@ export default function AdminDashboardPage() {
             {stats.top_selling_products && stats.top_selling_products.length > 0 ? (
               <ul className="divide-y divide-gray-100">
                 {stats.top_selling_products.map((p, i) => (
-                  <motion.li 
-                    key={i} 
+                  <motion.li
+                    key={i}
                     className="py-4 flex items-center justify-between"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -499,7 +499,7 @@ export default function AdminDashboardPage() {
                     </div>
                     <div className="flex items-center">
                       <span className="text-gray-600 mr-2">{p.total_sold.toLocaleString()} sold</span>
-                      <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      <span className="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                         Ksh {parseFloat(p.total_revenue).toLocaleString()}
                       </span>
                     </div>
@@ -532,8 +532,8 @@ export default function AdminDashboardPage() {
             {stats.low_stock_products && stats.low_stock_products.length > 0 ? (
               <ul className="divide-y divide-gray-100">
                 {stats.low_stock_products.map((p, i) => (
-                  <motion.li 
-                    key={i} 
+                  <motion.li
+                    key={i}
                     className="py-4 flex items-center justify-between"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -542,16 +542,16 @@ export default function AdminDashboardPage() {
                     <span className="font-medium text-gray-900 truncate max-w-[200px]">{p.name}</span>
                     <div className="flex items-center">
                       <div className="w-24 bg-gray-200 rounded-full h-2 mr-3">
-                        <div 
+                        <div
                           className={`h-2 rounded-full ${
-                            p.stock > 3 ? 'bg-green-500' : 
+                            p.stock > 3 ? 'bg-green-500' :
                             p.stock > 1 ? 'bg-amber-500' : 'bg-red-500'
-                          }`} 
-                          style={{ width: `${(p.stock / 10) * 100}%` }} 
+                          }`}
+                          style={{ width: `${(p.stock / 10) * 100}%` }}
                         ></div>
                       </div>
                       <span className={`font-medium ${
-                        p.stock > 3 ? 'text-green-600' : 
+                        p.stock > 3 ? 'text-green-600' :
                         p.stock > 1 ? 'text-amber-600' : 'text-red-600'
                       }`}>
                         {p.stock} left

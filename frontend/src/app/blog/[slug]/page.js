@@ -1,3 +1,4 @@
+import { API_ORIGIN } from '@/lib/apiConfig';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { format } from 'date-fns';
@@ -5,7 +6,7 @@ import ShareButtons from '@/components/ShareButtons';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import Link from 'next/link';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL = API_ORIGIN;
 
 async function getPost(slug) {
     try {
@@ -45,7 +46,7 @@ export default async function BlogPostPage({ params }) {
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
                         {post.category && (
-                            <Link href={`/blog/category/${post.category.slug}`} className="text-base font-semibold text-indigo-600 uppercase tracking-wider hover:underline">
+                            <Link href={`/blog/category/${post.category.slug}`} className="text-base font-semibold text-emerald-600 uppercase tracking-wider hover:underline">
                                 {post.category.name}
                             </Link>
                         )}

@@ -34,7 +34,7 @@ export default function CartPage() {
       toast.error("Your cart is empty!");
       return;
     }
-    
+
     if (user) {
       const checkoutUrl = appliedCoupon ? `/cart/checkout?coupon=${appliedCoupon.code}` : '/cart/checkout';
       router.push(checkoutUrl);
@@ -73,7 +73,7 @@ export default function CartPage() {
     }
     setIsCheckingCoupon(true);
     setCouponError('');
-    
+
     try {
       const api = getAuthenticatedApi({ authTokens, setAuthTokens, logoutUser });
       const response = await api('/coupons/validate/', {
@@ -90,7 +90,7 @@ export default function CartPage() {
       setIsCheckingCoupon(false);
     }
   };
-  
+
   const removeCoupon = () => {
     setAppliedCoupon(null);
     setCouponCode('');
@@ -102,7 +102,7 @@ export default function CartPage() {
     <div className="bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center mb-6">
-          <button onClick={() => router.back()} className="flex items-center text-gray-600 hover:text-indigo-600 transition-colors">
+          <button onClick={() => router.back()} className="flex items-center text-gray-600 hover:text-emerald-600 transition-colors">
             <FiArrowLeft className="mr-2" /> Back
           </button>
           <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl font-serif ml-8">Shopping Cart</h1>
@@ -115,7 +115,7 @@ export default function CartPage() {
             </div>
             <h2 className="mt-6 text-2xl font-bold text-gray-900">Your cart is empty</h2>
             <p className="mt-2 text-gray-600 max-w-md mx-auto">Start shopping to fill it with amazing products!</p>
-            <Link href="/products" className="mt-6 inline-block bg-indigo-600 text-white font-medium py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors shadow-md">Browse Products</Link>
+            <Link href="/products" className="mt-6 inline-block bg-emerald-600 text-white font-medium py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-md">Browse Products</Link>
           </div>
         ) : (
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -140,7 +140,7 @@ export default function CartPage() {
                             <div className="flex justify-between">
                               <div>
                                 <h3 className="text-lg font-medium text-gray-900 font-serif">
-                                  <Link href={`/products/${product.id}`} className="hover:text-indigo-600">{product.name}</Link>
+                                  <Link href={`/products/${product.id}`} className="hover:text-emerald-600">{product.name}</Link>
                                 </h3>
                                 <p className="mt-1 text-sm text-gray-500">{product.category.name}</p>
                               </div>
@@ -150,7 +150,7 @@ export default function CartPage() {
                           <div className="mt-4 flex items-end justify-between">
                             <div className="flex items-center">
                               <button onClick={() => handleQuantityChange(product.id, product.quantity - 1)} disabled={isUpdating[product.id]} className="px-3 py-1.5 border border-gray-300 rounded-l-md text-gray-600 hover:bg-gray-100 disabled:opacity-50">-</button>
-                              <div className="w-12 text-center border-t border-b border-gray-300 py-1.5">{isUpdating[product.id] ? <div className="h-4 w-4 mx-auto border-t-2 border-indigo-600 rounded-full animate-spin"></div> : product.quantity}</div>
+                              <div className="w-12 text-center border-t border-b border-gray-300 py-1.5">{isUpdating[product.id] ? <div className="h-4 w-4 mx-auto border-t-2 border-emerald-600 rounded-full animate-spin"></div> : product.quantity}</div>
                               <button onClick={() => handleQuantityChange(product.id, product.quantity + 1)} disabled={isUpdating[product.id]} className="px-3 py-1.5 border border-gray-300 rounded-r-md text-gray-600 hover:bg-gray-100 disabled:opacity-50">+</button>
                             </div>
                             <button onClick={() => handleRemove(product.id)} disabled={isRemoving} className="flex items-center text-red-600 hover:text-red-800 disabled:opacity-50"><FiTrash2 className="mr-1" /><span>Remove</span></button>
@@ -174,7 +174,7 @@ export default function CartPage() {
                   <div className="flex justify-between"><span className="text-gray-600">Shipping</span><span className="text-gray-900">Ksh{shippingCost.toFixed(2)}</span></div>
                   <div className="flex justify-between"><span className="text-gray-600">Tax (16% VAT)</span><span className="text-gray-900">Ksh{tax.toFixed(2)}</span></div>
                   {appliedCoupon && (<div className="flex justify-between text-green-600"><span>Discount ({appliedCoupon.code})</span><span>-Ksh{discount.toFixed(2)}</span></div>)}
-                  <div className="pt-4 border-t border-gray-200 flex justify-between text-lg font-bold"><span className="text-gray-900">Total</span><span className="text-indigo-700">Ksh{total.toFixed(2)}</span></div>
+                  <div className="pt-4 border-t border-gray-200 flex justify-between text-lg font-bold"><span className="text-gray-900">Total</span><span className="text-emerald-700">Ksh{total.toFixed(2)}</span></div>
                 </div>
                 <div className="mt-6">
                   {appliedCoupon ? (
@@ -183,7 +183,7 @@ export default function CartPage() {
                     <>
                       <label htmlFor="coupon" className="block text-sm font-medium text-gray-700 mb-2">Apply Coupon</label>
                       <div className="flex gap-2">
-                        <input type="text" id="coupon" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} placeholder="Enter coupon code" className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" />
+                        <input type="text" id="coupon" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} placeholder="Enter coupon code" className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" />
                         <button onClick={applyCoupon} disabled={isCheckingCoupon} className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50">{isCheckingCoupon ? <FiLoader className="animate-spin" /> : 'Apply'}</button>
                       </div>
                       {couponError && <p className="mt-2 text-sm text-red-600">{couponError}</p>}
@@ -191,7 +191,7 @@ export default function CartPage() {
                   )}
                 </div>
                 <div className="mt-8">
-                  <button onClick={handleCheckout} className="w-full bg-indigo-600 border border-transparent rounded-lg shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700">
+                  <button onClick={handleCheckout} className="w-full bg-emerald-600 border border-transparent rounded-lg shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-emerald-700">
                     {user ? 'Proceed to Checkout' : 'Login to Checkout'}
                   </button>
                 </div>

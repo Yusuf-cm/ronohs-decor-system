@@ -8,7 +8,7 @@ export default function OrderSummary({ cartItems, subtotal, tax, shipping, total
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 sticky top-8 border border-gray-100">
       <h2 className="text-xl font-bold text-gray-900 mb-6 font-serif">Order Summary</h2>
-      
+
       <div className="space-y-4 max-h-64 overflow-y-auto pr-2 mb-6">
         <AnimatePresence>
           {cartItems.map(item => (
@@ -41,7 +41,7 @@ export default function OrderSummary({ cartItems, subtotal, tax, shipping, total
           ))}
         </AnimatePresence>
       </div>
-      
+
       <div className="space-y-3 pt-6 border-t">
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Subtotal</span>
@@ -59,7 +59,7 @@ export default function OrderSummary({ cartItems, subtotal, tax, shipping, total
         </div>
         <div className="pt-4 border-t border-dashed flex justify-between text-lg font-bold">
           <span className="text-gray-900">Total</span>
-          <span className="text-indigo-700">Ksh{total.toFixed(2)}</span>
+          <span className="text-emerald-700">Ksh{total.toFixed(2)}</span>
         </div>
       </div>
     </div>

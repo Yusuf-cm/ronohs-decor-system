@@ -21,7 +21,7 @@ async function getProducts({ searchQuery = '', page = '1', category = '', sort =
   if (page) params.append('page', page);
   if (category) params.append('category', category);
   if (sort) params.append('ordering', sort);
-  
+
   Object.entries(filters).forEach(([key, values]) => {
     // Correctly handle attribute filters which are arrays
     if (Array.isArray(values)) {
@@ -47,13 +47,13 @@ async function getProducts({ searchQuery = '', page = '1', category = '', sort =
 
 export default async function ProductsPage({ searchParams }) {
   // Convert searchParams to a plain object first
-  const params = parseSearchParams(searchParams);
-  
+  const params = parseSearchParams(await searchParams);
+
   const searchQuery = params.search || '';
   const page = params.page || 1;
   const category = params.category || '';
   const sort = params.ordering || ''; // Corrected to use 'ordering' to match URL param
-  
+
   const filters = {};
   Object.entries(params).forEach(([key, value]) => {
     if (key.startsWith('filter_')) {
@@ -68,24 +68,24 @@ export default async function ProductsPage({ searchParams }) {
     fetchCategories(),
     fetchProductAttributes()
   ]);
-  
+
   const products = data.results || [];
   const totalProducts = data.count || 0;
-  const totalPages = Math.ceil(totalProducts / 12); 
+  const totalPages = Math.ceil(totalProducts / 12);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
         {searchQuery ? (
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-4">
-            Search results for: <span className="text-indigo-600">"{searchQuery}"</span>
+            Search results for: <span className="text-emerald-600">"{searchQuery}"</span>
           </h1>
         ) : (
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-4">
             Our Collection
           </h1>
         )}
-        
+
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Discover handcrafted furniture and decor that transforms your space
         </p>
@@ -95,17 +95,17 @@ export default async function ProductsPage({ searchParams }) {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="w-full md:w-3/4">
             <Suspense fallback={<div className="h-14 bg-gray-100 rounded-lg animate-pulse"></div>}>
-              <SearchBar 
-                initialValue={searchQuery} 
-                placeholder="Search products..." 
+              <SearchBar
+                initialValue={searchQuery}
+                placeholder="Search products..."
               />
             </Suspense>
           </div>
-          
+
           <div className="w-full md:w-1/4">
             <Suspense fallback={<div className="h-14 bg-gray-100 rounded-lg animate-pulse"></div>}>
-              <ProductFilters 
-                categories={categories} 
+              <ProductFilters
+                categories={categories}
                 attributes={attributes}
                 selectedCategory={category}
                 selectedSort={sort}
@@ -114,18 +114,18 @@ export default async function ProductsPage({ searchParams }) {
             </Suspense>
           </div>
         </div>
-        
+
         <div className="mt-4 flex justify-between items-center">
           <p className="text-sm text-gray-500">
             Showing {products.length} of {totalProducts} products
           </p>
-          
+
           {totalProducts > 0 && (
             <div className="text-sm text-gray-500">
               Sorted by: <span className="font-medium">
-                {sort === 'price' ? 'Price: Low to High' : 
-                 sort === '-price' ? 'Price: High to Low' : 
-                 sort === 'created_at' ? 'Newest' : 
+                {sort === 'price' ? 'Price: Low to High' :
+                 sort === '-price' ? 'Price: High to Low' :
+                 sort === 'created_at' ? 'Newest' :
                  'Featured'}
               </span>
             </div>
@@ -137,8 +137,8 @@ export default async function ProductsPage({ searchParams }) {
         <div className="hidden lg:block lg:w-1/4">
           <div className="sticky top-24">
             <Suspense fallback={<div className="h-64 bg-gray-100 rounded-xl animate-pulse"></div>}>
-              <ProductFilters 
-                categories={categories} 
+              <ProductFilters
+                categories={categories}
                 attributes={attributes}
                 selectedCategory={category}
                 selectedSort={sort}
@@ -148,7 +148,7 @@ export default async function ProductsPage({ searchParams }) {
             </Suspense>
           </div>
         </div>
-        
+
         <div className="w-full lg:w-3/4">
           {products.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -165,21 +165,21 @@ export default async function ProductsPage({ searchParams }) {
               </div>
               <h3 className="text-xl font-medium text-gray-900">No products found</h3>
               <p className="mt-2 text-gray-600 max-w-md mx-auto">
-                {searchQuery 
-                  ? "We couldn't find any products matching your search. Try adjusting your filters." 
+                {searchQuery
+                  ? "We couldn't find any products matching your search. Try adjusting your filters."
                   : "Check back soon for new additions to our collection."}
               </p>
               <div className="mt-6">
-                <a 
-                  href="/products" 
-                  className="inline-block bg-indigo-600 text-white font-medium py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors"
+                <a
+                  href="/products"
+                  className="inline-block bg-emerald-600 text-white font-medium py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors"
                 >
                   {searchQuery ? "Clear Search & Filters" : "Browse All Products"}
                 </a>
               </div>
             </div>
           )}
-          
+
           {products.length > 0 && (
             <div className="mt-12">
               <PaginationControls

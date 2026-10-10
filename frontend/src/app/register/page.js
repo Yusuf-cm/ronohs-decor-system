@@ -1,4 +1,6 @@
 'use client';
+
+import { API_ORIGIN } from '@/lib/apiConfig';
 import { useState } from 'react';
 import { useAuth } from '@/auth/useAuth';
 import Link from 'next/link';
@@ -21,7 +23,7 @@ export default function RegisterPage() {
     const [acceptedTerms, setAcceptedTerms] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [passwordScore, setPasswordScore] = useState(0);
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const API_BASE_URL = API_ORIGIN;
 
     const { registerUser } = useAuth();
 
@@ -74,16 +76,16 @@ export default function RegisterPage() {
         }
 
         try {
-            await registerUser({ 
-                username: formData.username, 
-                password: formData.password, 
-                email: formData.email, 
-                first_name: formData.firstName, 
-                last_name: formData.lastName 
+            await registerUser({
+                username: formData.username,
+                password: formData.password,
+                email: formData.email,
+                first_name: formData.firstName,
+                last_name: formData.lastName
             });
-            
+
             setSuccessMessage('Account created successfully! Redirecting to login...');
-            
+
             // Redirect to login after 3 seconds
             setTimeout(() => {
                 window.location.href = '/login';
@@ -108,81 +110,81 @@ export default function RegisterPage() {
     return (
         <div className="max-w-md mx-auto mt-10 mb-10 p-8 bg-white rounded-xl shadow-lg border border-gray-100">
             <div className="text-center mb-8">
-                <div className="mx-auto bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                    <FiUser className="h-8 w-8 text-indigo-600" />
+                <div className="mx-auto bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <FiUser className="h-8 w-8 text-emerald-600" />
                 </div>
                 <h1 className="text-3xl font-bold font-serif text-gray-900">Create an Account</h1>
                 <p className="mt-2 text-gray-600">
                     Join our community and start your journey
                 </p>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 flex items-center">
                             <FiUser className="mr-2" /> First Name
                         </label>
-                        <input 
-                            id="firstName" 
+                        <input
+                            id="firstName"
                             name="firstName"
-                            type="text" 
-                            placeholder="John" 
-                            value={formData.firstName} 
-                            onChange={handleChange} 
-                            required 
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" 
+                            type="text"
+                            placeholder="John"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                         />
                     </div>
-                    
+
                     <div className="space-y-2">
                         <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 flex items-center">
                             <FiUser className="mr-2" /> Last Name
                         </label>
-                        <input 
-                            id="lastName" 
+                        <input
+                            id="lastName"
                             name="lastName"
-                            type="text" 
-                            placeholder="Doe" 
-                            value={formData.lastName} 
-                            onChange={handleChange} 
-                            required 
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" 
+                            type="text"
+                            placeholder="Doe"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                         />
                     </div>
                 </div>
-                
+
                 <div className="space-y-2">
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 flex items-center">
                         <FiMail className="mr-2" /> Email
                     </label>
-                    <input 
-                        id="email" 
+                    <input
+                        id="email"
                         name="email"
-                        type="email" 
-                        placeholder="your@email.com" 
-                        value={formData.email} 
-                        onChange={handleChange} 
-                        required 
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" 
+                        type="email"
+                        placeholder="your@email.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     />
                 </div>
-                
+
                 <div className="space-y-2">
                     <label htmlFor="username" className="block text-sm font-medium text-gray-700 flex items-center">
                         <FiUser className="mr-2" /> Username
                     </label>
-                    <input 
-                        id="username" 
+                    <input
+                        id="username"
                         name="username"
-                        type="text" 
-                        placeholder="Username" 
-                        value={formData.username} 
-                        onChange={handleChange} 
-                        required 
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent" 
+                        type="text"
+                        placeholder="Username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     />
-                    
+
                     {usernameSuggestions.length > 0 && (
                         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                             <p className="text-sm font-medium text-blue-800 flex items-center">
@@ -190,10 +192,10 @@ export default function RegisterPage() {
                             </p>
                             <div className="flex flex-wrap gap-2 mt-3">
                                 {usernameSuggestions.map((s) => (
-                                    <button 
-                                        key={s} 
-                                        type="button" 
-                                        onClick={() => handleSuggestionClick(s)} 
+                                    <button
+                                        key={s}
+                                        type="button"
+                                        onClick={() => handleSuggestionClick(s)}
                                         className="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-lg text-sm hover:bg-blue-200 transition-colors"
                                     >
                                         {s}
@@ -203,23 +205,23 @@ export default function RegisterPage() {
                         </div>
                     )}
                 </div>
-                
+
                 <div className="space-y-2">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700 flex items-center">
                         <FiLock className="mr-2" /> Password
                     </label>
                     <div className="relative">
-                        <input 
-                            id="password" 
+                        <input
+                            id="password"
                             name="password"
-                            type={showPassword ? "text" : "password"} 
-                            placeholder="Create a strong password" 
-                            value={formData.password} 
-                            onChange={handleChange} 
-                            required 
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent pr-10" 
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Create a strong password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent pr-10"
                         />
-                        <button 
+                        <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
                             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
@@ -227,21 +229,21 @@ export default function RegisterPage() {
                             {showPassword ? <FiEyeOff className="h-5 w-5" /> : <FiEye className="h-5 w-5" />}
                         </button>
                     </div>
-                    
+
                     {formData.password && (
-                        <PasswordStrengthBar 
-                            password={formData.password} 
+                        <PasswordStrengthBar
+                            password={formData.password}
                             minLength={8}
                             onChangeScore={(score) => setPasswordScore(score)}
                             className="mt-2"
                         />
                     )}
-                    
+
                     <div className="text-xs text-gray-500 mt-2">
                         Use at least 8 characters with a mix of letters, numbers & symbols
                     </div>
                 </div>
-                
+
                 <div className="flex items-start">
                     <div className="flex items-center h-5">
                         <input
@@ -250,16 +252,16 @@ export default function RegisterPage() {
                             type="checkbox"
                             checked={acceptedTerms}
                             onChange={(e) => setAcceptedTerms(e.target.checked)}
-                            className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                            className="h-4 w-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500"
                         />
                     </div>
                     <div className="ml-3 text-sm">
                         <label htmlFor="terms" className="text-gray-700">
-                            I agree to the <a href="/terms" className="text-indigo-600 hover:underline">Terms of Service</a> and <a href="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</a>
+                            I agree to the <a href="/terms" className="text-emerald-600 hover:underline">Terms of Service</a> and <a href="/privacy" className="text-emerald-600 hover:underline">Privacy Policy</a>
                         </label>
                     </div>
                 </div>
-                
+
                 {successMessage && (
                     <div className="p-4 bg-green-100 border border-green-200 text-green-700 rounded-lg">
                         <p className="flex items-center">
@@ -267,16 +269,16 @@ export default function RegisterPage() {
                         </p>
                     </div>
                 )}
-                
+
                 <FormError message={error} />
-                
-                <button 
-                    type="submit" 
+
+                <button
+                    type="submit"
                     disabled={isLoading || !acceptedTerms || passwordScore < 2}
                     className={`w-full py-3 px-4 rounded-lg font-bold transition-all duration-300 flex items-center justify-center
                         ${isLoading || !acceptedTerms || passwordScore < 2
                             ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                            : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg'
+                            : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg'
                         }`}
                 >
                     {isLoading ? (
@@ -292,15 +294,15 @@ export default function RegisterPage() {
                     )}
                 </button>
             </form>
-            
+
             <div className="mt-8 pt-6 border-t border-gray-200">
                 <p className="text-center text-gray-600">
                     Already have an account?{' '}
-                    <Link href="/login" className="text-indigo-600 font-medium hover:underline">
+                    <Link href="/login" className="text-emerald-600 font-medium hover:underline">
                         Sign in
                     </Link>
                 </p>
-                
+
                 <div className="mt-6">
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
@@ -323,7 +325,7 @@ export default function RegisterPage() {
                             </svg>
                             <span className="ml-2">Facebook</span>
                         </button>
-                        
+
                         <button
                             type="button"
                             className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"

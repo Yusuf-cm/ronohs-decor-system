@@ -1,6 +1,7 @@
+import { API_ORIGIN } from '@/lib/apiConfig';
 import { jwtDecode } from 'jwt-decode';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL = API_ORIGIN;
 
 // A module-level variable to track the refresh request
 let isRefreshing = false;
@@ -40,12 +41,13 @@ export const getAuthenticatedApi = ({ authTokens, setAuthTokens, logoutUser }) =
             body: JSON.stringify({ refresh: currentAuthTokens.refresh }),
           });
 
-          const newTokens = await response.json();
+          const refreshed = await response.json();
+          const newTokens = { ...currentAuthTokens, ...refreshed };
 
           if (!response.ok) {
             throw new Error(newTokens.detail || 'Refresh token is invalid');
           }
-          
+
           localStorage.setItem('authTokens', JSON.stringify(newTokens));
           setAuthTokens(newTokens);
           currentAuthTokens = newTokens; // Update for the current request
@@ -85,7 +87,7 @@ export const getAuthenticatedApi = ({ authTokens, setAuthTokens, logoutUser }) =
     if (!response.ok) {
         const contentType = response.headers.get('content-type');
         const errorText = await response.text();
-        
+
         if (response.status === 401) {
             logoutUser();
         }

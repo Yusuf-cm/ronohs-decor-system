@@ -12,7 +12,7 @@ import ProductCard from '@/components/ProductCard'; // We can reuse the product 
 const WishlistPage = () => {
     const { user, authTokens, logoutUser, setAuthTokens } = useAuth();
     const router = useRouter();
-    
+
     const [wishlist, setWishlist] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -44,7 +44,7 @@ const WishlistPage = () => {
 
     const handleRemoveFromWishlist = async (productId) => {
         if (!authTokens) return;
-        
+
         // Optimistically update the UI
         const originalProducts = wishlist.products;
         setWishlist(prev => ({
@@ -70,12 +70,12 @@ const WishlistPage = () => {
     if (loading) {
         return (
             <div className="max-w-7xl mx-auto py-12 px-4 text-center">
-                <div className="h-10 w-10 mx-auto border-t-2 border-indigo-600 rounded-full animate-spin"></div>
+                <div className="h-10 w-10 mx-auto border-t-2 border-emerald-600 rounded-full animate-spin"></div>
                 <p className="mt-4 text-gray-600">Loading your wishlist...</p>
             </div>
         );
     }
-    
+
     if (error) {
         return <div className="text-center py-10 text-red-500">{error}</div>;
     }
@@ -92,7 +92,7 @@ const WishlistPage = () => {
             </div>
 
             {wishlist && wishlist.products.length > 0 ? (
-                <motion.div 
+                <motion.div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
                     initial="hidden"
                     animate="visible"
@@ -122,9 +122,9 @@ const WishlistPage = () => {
                     <p className="mt-2 text-gray-500 max-w-md mx-auto">
                         Add items you love to your wishlist to save them for later.
                     </p>
-                    <Link 
-                        href="/products" 
-                        className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                    <Link
+                        href="/products"
+                        className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700"
                     >
                         Explore Products
                     </Link>

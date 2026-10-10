@@ -4,10 +4,10 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { FiFilter, FiX, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { useState } from 'react';
 
-export default function ProductFilters({ 
-  categories, 
-  attributes, 
-  selectedCategory, 
+export default function ProductFilters({
+  categories,
+  attributes,
+  selectedCategory,
   selectedSort,
   appliedFilters,
   isSidebar = false
@@ -16,10 +16,10 @@ export default function ProductFilters({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
+
   const createUrl = (updates) => {
     const params = new URLSearchParams(searchParams);
-    
+
     Object.entries(updates).forEach(([key, value]) => {
       if (value === null || value === '') {
         params.delete(key);
@@ -27,15 +27,15 @@ export default function ProductFilters({
         params.set(key, value);
       }
     });
-    
+
     params.delete('page');
     return `${pathname}?${params.toString()}`;
   };
-  
+
   const toggleFilter = (filterKey, valueToToggle) => {
     const params = new URLSearchParams(searchParams);
     const currentValues = params.getAll(`filter_${filterKey}`);
-    
+
     if (currentValues.includes(valueToToggle)) {
         // Remove the value
         const newValues = currentValues.filter(v => v !== valueToToggle);
@@ -49,13 +49,13 @@ export default function ProductFilters({
     params.delete('page');
     router.replace(`${pathname}?${params.toString()}`);
   };
-  
+
   const clearFilters = () => {
     const params = new URLSearchParams();
     if (searchParams.get('search')) params.set('search', searchParams.get('search'));
     router.replace(`${pathname}?${params.toString()}`);
   };
-  
+
   const appliedFilterCount = Object.keys(appliedFilters).reduce(
     (count, key) => count + appliedFilters[key].length, 0
   );
@@ -70,7 +70,7 @@ export default function ProductFilters({
           <span>Filters {appliedFilterCount > 0 && `(${appliedFilterCount})`}</span>
           <FiChevronDown className="h-5 w-5 text-gray-400" />
         </button>
-        
+
         {mobileFiltersOpen && (
           <div className="fixed inset-0 z-50 flex">
             <div className="fixed inset-0 bg-black bg-opacity-25" onClick={() => setMobileFiltersOpen(false)} />
@@ -86,8 +86,8 @@ export default function ProductFilters({
                 </button>
               </div>
               <div className="p-4">
-                <FilterContent 
-                  categories={categories} 
+                <FilterContent
+                  categories={categories}
                   attributes={attributes}
                   selectedCategory={selectedCategory}
                   selectedSort={selectedSort}
@@ -97,7 +97,7 @@ export default function ProductFilters({
                 />
                 <div className="mt-6 flex gap-3">
                   <button onClick={clearFilters} disabled={appliedFilterCount === 0} className="flex-1 py-2 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50">Clear all</button>
-                  <button onClick={() => setMobileFiltersOpen(false)} className="flex-1 py-2 px-4 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700">Apply</button>
+                  <button onClick={() => setMobileFiltersOpen(false)} className="flex-1 py-2 px-4 bg-emerald-600 text-white rounded-md text-sm font-medium hover:bg-emerald-700">Apply</button>
                 </div>
               </div>
             </div>
@@ -106,17 +106,17 @@ export default function ProductFilters({
       </div>
     );
   }
-  
+
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-gray-900">Filters</h3>
         {appliedFilterCount > 0 && (
-          <button onClick={clearFilters} className="text-sm text-indigo-600 hover:text-indigo-800">Clear all</button>
+          <button onClick={clearFilters} className="text-sm text-emerald-600 hover:text-emerald-800">Clear all</button>
         )}
       </div>
-      <FilterContent 
-        categories={categories} 
+      <FilterContent
+        categories={categories}
         attributes={attributes}
         selectedCategory={selectedCategory}
         selectedSort={selectedSort}
@@ -134,9 +134,9 @@ const FilterContent = ({ categories, attributes, selectedCategory, selectedSort,
     sort: true,
     ...(attributes && Object.fromEntries(attributes.map(attr => [attr.slug, true])))
   });
-  
+
   const toggleSection = (section) => setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
-  
+
   return (
     <div className="space-y-8">
       <div>
@@ -146,9 +146,9 @@ const FilterContent = ({ categories, attributes, selectedCategory, selectedSort,
         </button>
         {openSections.category && (
           <div className="space-y-2 pl-1">
-            <a href={createUrl({ category: '' })} className={`block py-1 text-sm ${!selectedCategory ? 'text-indigo-600 font-medium' : 'text-gray-600 hover:text-gray-900'}`}>All Categories</a>
+            <a href={createUrl({ category: '' })} className={`block py-1 text-sm ${!selectedCategory ? 'text-emerald-600 font-medium' : 'text-gray-600 hover:text-gray-900'}`}>All Categories</a>
             {categories.map(category => (
-              <a key={category.slug} href={createUrl({ category: category.slug })} className={`block py-1 text-sm ${selectedCategory === category.slug ? 'text-indigo-600 font-medium' : 'text-gray-600 hover:text-gray-900'}`}>{category.name}</a>
+              <a key={category.slug} href={createUrl({ category: category.slug })} className={`block py-1 text-sm ${selectedCategory === category.slug ? 'text-emerald-600 font-medium' : 'text-gray-600 hover:text-gray-900'}`}>{category.name}</a>
             ))}
           </div>
         )}
@@ -161,12 +161,12 @@ const FilterContent = ({ categories, attributes, selectedCategory, selectedSort,
         {openSections.sort && (
           <div className="space-y-2 pl-1">
             {[{ value: '', label: 'Featured' }, { value: 'created_at', label: 'Newest' }, { value: 'price', label: 'Price: Low to High' }, { value: '-price', label: 'Price: High to Low' }].map(option => (
-              <a key={option.value} href={createUrl({ ordering: option.value })} className={`block py-1 text-sm ${selectedSort === option.value ? 'text-indigo-600 font-medium' : 'text-gray-600 hover:text-gray-900'}`}>{option.label}</a>
+              <a key={option.value} href={createUrl({ ordering: option.value })} className={`block py-1 text-sm ${selectedSort === option.value ? 'text-emerald-600 font-medium' : 'text-gray-600 hover:text-gray-900'}`}>{option.label}</a>
             ))}
           </div>
         )}
       </div>
-      
+
       {attributes && attributes.map(attribute => (
         <div key={attribute.slug}>
           <button onClick={() => toggleSection(attribute.slug)} className="flex items-center justify-between w-full mb-3">
@@ -185,7 +185,7 @@ const FilterContent = ({ categories, attributes, selectedCategory, selectedSort,
                     value={attrValue.value}
                     checked={(appliedFilters[attribute.slug] || []).includes(attrValue.value)}
                     onChange={() => toggleFilter(attribute.slug, attrValue.value)}
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                   />
                   <label htmlFor={`filter-${attribute.slug}-${attrValue.id}`} className="ml-2 text-sm text-gray-600">
                     {attrValue.value}

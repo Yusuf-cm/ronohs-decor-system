@@ -19,7 +19,7 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    
+
     const { loginUser } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -27,15 +27,15 @@ export default function LoginPage() {
 
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-        
+
         if (!formData.username.trim() || !formData.password.trim()) {
             setError('Please fill in all fields');
             return;
         }
-        
+
         setError('');
         setIsLoading(true);
-        
+
         try {
             await loginUser(formData.username, formData.password, nextUrl);
             toast.success('Login successful!');
@@ -61,40 +61,40 @@ export default function LoginPage() {
     }, [error]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center p-4">
-            <motion.div 
+        <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-stone-50 flex items-center justify-center p-4">
+            <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
                 className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden"
             >
-                <div className="p-1 bg-gradient-to-r from-indigo-500 to-purple-600">
+                <div className="p-1 bg-gradient-to-r from-emerald-500 to-stone-600">
                     <div className="bg-white rounded-xl p-6 sm:p-8">
                         <div className="flex justify-center mb-6">
-                            <motion.div 
-                                className="bg-indigo-100 p-3 rounded-full"
+                            <motion.div
+                                className="bg-emerald-100 p-3 rounded-full"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <FiLogIn className="h-8 w-8 text-indigo-600" />
+                                <FiLogIn className="h-8 w-8 text-emerald-600" />
                             </motion.div>
                         </div>
-                        
+
                         <h1 className="text-2xl font-bold text-center text-gray-900 mb-2">
                             Welcome Back
                         </h1>
                         <p className="text-gray-600 text-center mb-8">
                             Sign in to your account to continue
                         </p>
-                        
-                        <form 
-                            onSubmit={handleSubmit} 
+
+                        <form
+                            onSubmit={handleSubmit}
                             className="flex flex-col space-y-6"
                             noValidate
                         >
                             <div className="space-y-2">
-                                <label 
-                                    htmlFor="username" 
+                                <label
+                                    htmlFor="username"
                                     className="block text-sm font-medium text-gray-700 flex items-center"
                                 >
                                     <FiUser className="mr-2" /> Username or Email
@@ -103,7 +103,7 @@ export default function LoginPage() {
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <FiUser className="h-5 w-5 text-gray-400" />
                                     </div>
-                                    <input 
+                                    <input
                                         id="username"
                                         type="text"
                                         name="username"
@@ -113,24 +113,24 @@ export default function LoginPage() {
                                         autoComplete="username"
                                         disabled={isLoading}
                                         required
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400 disabled:opacity-75 disabled:cursor-not-allowed"
+                                        className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-gray-400 disabled:opacity-75 disabled:cursor-not-allowed"
                                         aria-required="true"
                                     />
                                 </div>
                             </div>
-                            
+
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center">
-                                    <label 
-                                        htmlFor="password" 
+                                    <label
+                                        htmlFor="password"
                                         className="block text-sm font-medium text-gray-700 flex items-center"
                                     >
                                         <FiLock className="mr-2" /> Password
                                     </label>
                                     <div className="text-sm">
-                                        <Link 
-                                            href="/forgot-password" 
-                                            className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline"
+                                        <Link
+                                            href="/forgot-password"
+                                            className="font-medium text-emerald-600 hover:text-emerald-500 focus:outline-none focus:underline"
                                             tabIndex={isLoading ? -1 : 0}
                                         >
                                             Forgot password?
@@ -141,7 +141,7 @@ export default function LoginPage() {
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <FiLock className="h-5 w-5 text-gray-400" />
                                     </div>
-                                    <input 
+                                    <input
                                         id="password"
                                         type={showPassword ? "text" : "password"}
                                         name="password"
@@ -151,7 +151,7 @@ export default function LoginPage() {
                                         autoComplete="current-password"
                                         disabled={isLoading}
                                         required
-                                        className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400 disabled:opacity-75 disabled:cursor-not-allowed"
+                                        className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-gray-400 disabled:opacity-75 disabled:cursor-not-allowed"
                                         aria-required="true"
                                     />
                                     <button
@@ -170,32 +170,32 @@ export default function LoginPage() {
                                     </button>
                                 </div>
                             </div>
-                            
+
                             <div className="flex items-center">
                                 <input
                                     id="remember-me"
                                     name="remember-me"
                                     type="checkbox"
-                                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded disabled:opacity-75 disabled:cursor-not-allowed"
+                                    className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded disabled:opacity-75 disabled:cursor-not-allowed"
                                     disabled={isLoading}
                                 />
-                                <label 
-                                    htmlFor="remember-me" 
+                                <label
+                                    htmlFor="remember-me"
                                     className="ml-2 block text-sm text-gray-700"
                                 >
                                     Remember me
                                 </label>
                             </div>
-                            
+
                             <FormError message={error} />
-                            
-                            <motion.button 
-                                type="submit" 
+
+                            <motion.button
+                                type="submit"
                                 disabled={isLoading}
                                 className={`w-full py-3 px-4 rounded-lg font-bold transition-all duration-300 flex items-center justify-center
                                     ${isLoading
                                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                        : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg'
+                                        : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg'
                                     }`}
                                 whileHover={{ scale: isLoading ? 1 : 1.02 }}
                                 whileTap={{ scale: isLoading ? 1 : 0.98 }}
@@ -203,10 +203,10 @@ export default function LoginPage() {
                             >
                                 {isLoading ? (
                                     <>
-                                        <svg 
-                                            className="animate-spin h-5 w-5 text-white mr-3" 
-                                            xmlns="http://www.w3.org/2000/svg" 
-                                            fill="none" 
+                                        <svg
+                                            className="animate-spin h-5 w-5 text-white mr-3"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
                                             viewBox="0 0 24 24"
                                             aria-hidden="true"
                                         >
@@ -220,7 +220,7 @@ export default function LoginPage() {
                                 )}
                             </motion.button>
                         </form>
-                        
+
                         <div className="relative mt-6">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-gray-300"></div>
@@ -229,11 +229,11 @@ export default function LoginPage() {
                                 <span className="px-2 bg-white text-gray-500">Or continue with</span>
                             </div>
                         </div>
-                        
+
                         <div className="grid grid-cols-2 gap-3 mt-6">
                             <motion.button
                                 type="button"
-                                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-75 disabled:cursor-not-allowed"
+                                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-75 disabled:cursor-not-allowed"
                                 whileHover={{ y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                                 disabled={isLoading}
@@ -244,7 +244,7 @@ export default function LoginPage() {
                             </motion.button>
                             <motion.button
                                 type="button"
-                                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-75 disabled:cursor-not-allowed"
+                                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-75 disabled:cursor-not-allowed"
                                 whileHover={{ y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                                 disabled={isLoading}
@@ -254,43 +254,43 @@ export default function LoginPage() {
                                 <span className="ml-2">Facebook</span>
                             </motion.button>
                         </div>
-                        
+
                         <p className="text-center mt-8 text-gray-600">
                             Don't have an account?{' '}
-                            <Link 
-                                href="/register" 
-                                className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline"
+                            <Link
+                                href="/register"
+                                className="font-medium text-emerald-600 hover:text-emerald-500 focus:outline-none focus:underline"
                                 tabIndex={isLoading ? -1 : 0}
                             >
                                 Register now
                             </Link>
                         </p>
-                        
+
                         <div className="mt-6 text-center">
-                            <Link 
-                                href="/" 
-                                className="inline-flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors focus:outline-none focus:underline"
+                            <Link
+                                href="/"
+                                className="inline-flex items-center text-emerald-600 hover:text-emerald-800 text-sm font-medium transition-colors focus:outline-none focus:underline"
                                 tabIndex={isLoading ? -1 : 0}
                             >
                                 <FiArrowLeft className="mr-1" />
                                 Back to homepage
                             </Link>
                         </div>
-                        
+
                         <div className="mt-8 pt-6 border-t border-gray-200">
                             <p className="text-xs text-gray-500 text-center">
                                 By signing in, you agree to our{' '}
-                                <a 
-                                    href="#" 
-                                    className="text-indigo-600 hover:underline focus:outline-none focus:underline"
+                                <a
+                                    href="#"
+                                    className="text-emerald-600 hover:underline focus:outline-none focus:underline"
                                     tabIndex={isLoading ? -1 : 0}
                                 >
                                     Terms of Service
                                 </a>{' '}
                                 and{' '}
-                                <a 
-                                    href="#" 
-                                    className="text-indigo-600 hover:underline focus:outline-none focus:underline"
+                                <a
+                                    href="#"
+                                    className="text-emerald-600 hover:underline focus:outline-none focus:underline"
                                     tabIndex={isLoading ? -1 : 0}
                                 >
                                     Privacy Policy

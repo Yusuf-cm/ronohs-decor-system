@@ -1,5 +1,7 @@
 'use client';
 
+import { API_ORIGIN } from '@/lib/apiConfig';
+
 import { useState, useEffect } from 'react';
 import Carousel from './Carousel';
 import ProductCard from './ProductCard';
@@ -7,20 +9,25 @@ import ProductCard from './ProductCard';
 export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
+    const controller = new AbortController();
+    setLoading(true);
+    setError(false);
     async function getFeaturedProducts() {
       try {
         // --- START OF FIX: Correctly construct the API URL ---
-        const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
-        const res = await fetch(`${API_URL}/products/featured/`);
+        const API_URL = `${API_ORIGIN}/api`;
+        const res = await fetch(`${API_URL}/products/featured/`, { signal: controller.signal });
         // --- END OF FIX ---
-        
+
         if (!res.ok) {
           throw new Error('Failed to fetch featured products');
         }
         const data = await res.json();
-        
+
         if (Array.isArray(data)) {
           setProducts(data);
         } else if (data && Array.isArray(data.results)) {
@@ -32,14 +39,16 @@ export default function FeaturedProducts() {
         }
 
       } catch (error) {
-        console.error(error);
+        if (controller.signal.aborted) return;
+        setError(true);
         setProducts([]);
       } finally {
         setLoading(false);
       }
     }
     getFeaturedProducts();
-  }, []);
+    return () => controller.abort();
+  }, [attempt]);
 
   if (loading) {
     return (
@@ -61,7 +70,7 @@ export default function FeaturedProducts() {
   }
 
   if (!Array.isArray(products) || products.length === 0) {
-    return null;
+    return <div className="border border-[#dcded1] p-10 text-center" role="status"><p>{error ? 'The collection is taking a little longer to load.' : 'The featured edit is being updated.'}</p><p className="mt-2 text-sm text-gray-600">{error ? 'Please try again, or contact us for help finding a piece.' : 'Browse the full collection to see what is available.'}</p>{error && <button className="mt-4 underline" onClick={() => setAttempt(a => a + 1)}>Try again</button>}</div>;
   }
 
   return (

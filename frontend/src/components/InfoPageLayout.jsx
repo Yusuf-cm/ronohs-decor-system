@@ -16,7 +16,7 @@ export default function InfoPageLayout({ title, children }) {
         >
           <div className="p-8 sm:p-12">
             <div className="mb-10">
-              <Link href="/" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors">
+              <Link href="/" className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors">
                 <FiArrowLeft className="mr-2" />
                 Back to Home
               </Link>

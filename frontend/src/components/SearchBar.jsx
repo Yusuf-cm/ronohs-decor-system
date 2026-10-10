@@ -12,7 +12,7 @@ export default function SearchBar({ initialValue = '', placeholder = 'Search...'
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
+
   useEffect(() => {
     if (debouncedValue) {
       const params = new URLSearchParams(searchParams);
@@ -26,7 +26,7 @@ export default function SearchBar({ initialValue = '', placeholder = 'Search...'
       router.replace(`${pathname}?${params.toString()}`);
     }
   }, [debouncedValue, pathname, router, searchParams]);
-  
+
   const clearSearch = () => {
     setSearchTerm('');
     const params = new URLSearchParams(searchParams);
@@ -34,7 +34,7 @@ export default function SearchBar({ initialValue = '', placeholder = 'Search...'
     params.delete('page');
     router.replace(`${pathname}?${params.toString()}`);
   };
-  
+
   return (
     <div className="relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -45,7 +45,7 @@ export default function SearchBar({ initialValue = '', placeholder = 'Search...'
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder={placeholder}
-        className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder-gray-400"
+        className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-gray-400"
       />
       {searchTerm && (
         <button

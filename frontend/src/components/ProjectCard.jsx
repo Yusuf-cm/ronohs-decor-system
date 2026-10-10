@@ -18,7 +18,7 @@ export default function ProjectCard({ project }) {
     >
       {/* Image container with the hover effect */}
       <div className="relative aspect-square cursor-pointer overflow-hidden">
-        
+
         {/* Layer 1: Before Image (The base layer, always visible underneath) */}
         <Image
           src={beforeImage}
@@ -70,7 +70,7 @@ export default function ProjectCard({ project }) {
       <div className="p-6">
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="font-bold text-lg text-gray-900 group-hover:text-indigo-600 transition-colors">
+            <h3 className="font-bold text-lg text-gray-900 group-hover:text-emerald-600 transition-colors">
               {project.title}
             </h3>
             <p className="text-sm text-gray-500 mt-1">

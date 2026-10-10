@@ -23,8 +23,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Animation variants
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.4, ease: "easeOut" }
   }
@@ -44,8 +44,8 @@ const AccountHeader = ({ user, onLogout }) => (
         </svg>
       </button>
     </div>
-    
-    <motion.h1 
+
+    <motion.h1
       className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-3"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -53,22 +53,22 @@ const AccountHeader = ({ user, onLogout }) => (
     >
       My Account
     </motion.h1>
-    
-    <motion.div 
-      className="bg-gradient-to-r from-indigo-500 to-purple-600 w-16 h-1 rounded-full mx-auto"
+
+    <motion.div
+      className="bg-gradient-to-r from-emerald-500 to-stone-600 w-16 h-1 rounded-full mx-auto"
       initial={{ width: 0 }}
       animate={{ width: 64 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     />
-    
-    <motion.p 
+
+    <motion.p
       className="mt-6 text-lg text-gray-700 max-w-lg mx-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.4 }}
     >
       Welcome back,{' '}
-      <span className="font-semibold text-indigo-600">
+      <span className="font-semibold text-emerald-600">
         {user?.first_name || user?.username}
       </span>
       !
@@ -78,15 +78,15 @@ const AccountHeader = ({ user, onLogout }) => (
 
 const OrderCard = ({ order }) => {
   const [expanded, setExpanded] = useState(false);
-  
+
   return (
-    <motion.div 
+    <motion.div
       className="bg-white rounded-lg border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md"
       variants={cardVariants}
       whileHover={{ y: -5 }}
     >
       {/* Order Header - Clickable area */}
-      <button 
+      <button
         className="w-full text-left bg-gray-50 px-6 py-4 flex flex-wrap justify-between items-center gap-3 border-b border-gray-200"
         onClick={() => setExpanded(!expanded)}
         aria-expanded={expanded}
@@ -109,7 +109,7 @@ const OrderCard = ({ order }) => {
           <ChevronIcon expanded={expanded} />
         </div>
       </button>
-      
+
       {/* Collapsible details */}
       <AnimatePresence>
         {expanded && (
@@ -125,22 +125,22 @@ const OrderCard = ({ order }) => {
               <AddressSection order={order} />
               <ItemsSection order={order} />
             </div>
-            
+
             {/* Additional order metadata */}
             <div className="px-6 pb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-              <div className="bg-indigo-50 p-3 rounded-lg">
-                <p className="font-medium text-indigo-700">Payment Method</p>
+              <div className="bg-emerald-50 p-3 rounded-lg">
+                <p className="font-medium text-emerald-700">Payment Method</p>
                 <p className="text-gray-700">{order.payment_method || 'Credit Card'}</p>
               </div>
               <div className="bg-green-50 p-3 rounded-lg">
                 <p className="font-medium text-green-700">Delivery Status</p>
                 <p className="text-gray-700">{order.delivery_status || 'Processing'}</p>
               </div>
-              <div className="bg-purple-50 p-3 rounded-lg">
-                <p className="font-medium text-purple-700">Estimated Delivery</p>
+              <div className="bg-stone-50 p-3 rounded-lg">
+                <p className="font-medium text-stone-700">Estimated Delivery</p>
                 <p className="text-gray-700">
-                  {order.estimated_delivery 
-                    ? format(new Date(order.estimated_delivery), 'MMM d, yyyy') 
+                  {order.estimated_delivery
+                    ? format(new Date(order.estimated_delivery), 'MMM d, yyyy')
                     : 'Within 5 business days'}
                 </p>
               </div>
@@ -153,10 +153,10 @@ const OrderCard = ({ order }) => {
 };
 
 const ChevronIcon = ({ expanded }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
     className={`h-5 w-5 text-gray-500 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
-    viewBox="0 0 20 20" 
+    viewBox="0 0 20 20"
     fill="currentColor"
     aria-hidden="true"
   >
@@ -165,15 +165,15 @@ const ChevronIcon = ({ expanded }) => (
 );
 
 const OrderIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-emerald-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
   </svg>
 );
 
 const StatusBadge = ({ paid }) => (
   <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-    paid 
-      ? 'bg-green-100 text-green-800' 
+    paid
+      ? 'bg-green-100 text-green-800'
       : 'bg-yellow-100 text-yellow-800'
   }`}>
     {paid ? 'Paid' : 'Pending'}
@@ -197,7 +197,7 @@ const AddressSection = ({ order }) => (
 );
 
 const LocationIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-emerald-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
   </svg>
 );
@@ -213,9 +213,9 @@ const ItemsSection = ({ order }) => (
         <li key={item.id} className="flex justify-between text-sm text-gray-600 bg-gray-50 rounded-lg p-3 border border-gray-100">
           <span>
             {item.quantity} ×{' '}
-            <Link 
-              href={`/products/${item.product}`} 
-              className="font-medium text-indigo-600 hover:text-indigo-800 hover:underline transition-colors"
+            <Link
+              href={`/products/${item.product}`}
+              className="font-medium text-emerald-600 hover:text-emerald-800 hover:underline transition-colors"
               aria-label={`View ${item.product_name} product page`}
             >
               {item.product_name || `Product ID: ${item.product}`}
@@ -229,14 +229,14 @@ const ItemsSection = ({ order }) => (
 );
 
 const ItemsIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-emerald-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
     <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
   </svg>
 );
 
 const EmptyOrderState = () => (
-  <motion.div 
+  <motion.div
     className="text-center py-12"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -251,9 +251,9 @@ const EmptyOrderState = () => (
     <p className="text-gray-500 max-w-md mx-auto mb-6">
       You haven't placed any orders. Start shopping to see your order history here.
     </p>
-    <Link 
-      href="/products" 
-      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+    <Link
+      href="/products"
+      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
       aria-label="Browse our products"
     >
       Browse Products
@@ -298,7 +298,7 @@ const LoadingSkeleton = () => (
 );
 
 const ErrorMessage = ({ error, onRetry }) => (
-  <motion.div 
+  <motion.div
     className="mb-6 p-4 bg-red-50 rounded-lg border border-red-200"
     initial={{ opacity: 0, y: -10 }}
     animate={{ opacity: 1, y: 0 }}
@@ -311,7 +311,7 @@ const ErrorMessage = ({ error, onRetry }) => (
       </svg>
       {error}
     </p>
-    <button 
+    <button
       onClick={onRetry}
       className="mt-2 text-sm font-medium text-red-600 hover:text-red-800 underline focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
       aria-label="Retry loading orders"
@@ -324,14 +324,14 @@ const ErrorMessage = ({ error, onRetry }) => (
 export default function AccountPage() {
     const { user, authTokens, logoutUser, setAuthTokens } = useAuth();
     const router = useRouter();
-    
+
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     const fetchOrderHistory = useCallback(async () => {
         if (!user || !authTokens) return;
-        
+
         try {
             setLoading(true);
             setError('');
@@ -362,30 +362,30 @@ export default function AccountPage() {
     return (
         <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6">
             <AccountHeader user={user} onLogout={handleLogout} />
-    
+
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sm:p-8 mb-10">
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl md:text-2xl font-semibold text-gray-900 font-serif">
                         Order History
                     </h2>
-                    <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                     </div>
                 </div>
-    
+
                 {error && (
-                    <ErrorMessage 
-                        error={error} 
-                        onRetry={fetchOrderHistory} 
+                    <ErrorMessage
+                        error={error}
+                        onRetry={fetchOrderHistory}
                     />
                 )}
-    
+
                 {loading ? (
                     <LoadingSkeleton />
                 ) : orders.length > 0 ? (
-                    <motion.div 
+                    <motion.div
                         className="space-y-6"
                         initial="hidden"
                         animate="visible"

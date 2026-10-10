@@ -11,7 +11,7 @@ import { useDebounce } from 'use-debounce';
 
 // User Row Component
 const UserRow = ({ user, index }) => (
-  <motion.tr 
+  <motion.tr
     className="hover:bg-gray-50 border-b border-gray-100"
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -19,7 +19,7 @@ const UserRow = ({ user, index }) => (
   >
     <td className="px-4 py-3 sm:px-6">
       <div className="flex items-center">
-        <div className="flex-shrink-0 w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center font-medium text-indigo-800">
+        <div className="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center font-medium text-emerald-800">
           {user.first_name?.charAt(0) || user.username.charAt(0)}
         </div>
         <div className="ml-4">
@@ -31,7 +31,7 @@ const UserRow = ({ user, index }) => (
       </div>
     </td>
     <td className="px-4 py-3 sm:px-6 text-sm">
-      <a href={`mailto:${user.email}`} className="text-indigo-600 hover:text-indigo-800 flex items-center">
+      <a href={`mailto:${user.email}`} className="text-emerald-600 hover:text-emerald-800 flex items-center">
         <FiMail className="mr-1" />
         {user.email}
       </a>
@@ -41,19 +41,19 @@ const UserRow = ({ user, index }) => (
     </td>
     <td className="px-4 py-3 sm:px-6">
       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-        user.is_active 
-          ? 'bg-green-100 text-green-800' 
+        user.is_active
+          ? 'bg-green-100 text-green-800'
           : 'bg-red-100 text-red-800'
       }`}>
         {user.is_active ? 'Active' : 'Inactive'}
       </span>
     </td>
     <td className="px-4 py-3 sm:px-6 text-right">
-      <a 
+      <a
         href={`${process.env.NEXT_PUBLIC_DJANGO_ADMIN_URL || 'http://127.0.0.1:8000/admin'}/auth/user/${user.id}/change/`}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center text-indigo-600 hover:text-indigo-900 text-sm"
+        className="inline-flex items-center text-emerald-600 hover:text-emerald-900 text-sm"
       >
         <FiEdit2 className="mr-1" /> Manage
       </a>
@@ -85,15 +85,15 @@ const LoadingSkeleton = () => (
 // Status Filter Dropdown
 const StatusFilter = ({ statusFilter, setStatusFilter }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const options = [
     { value: 'all', label: 'All Statuses', icon: <FiFilter className="mr-2" /> },
     { value: 'active', label: 'Active Users', icon: <FiUserCheck className="mr-2 text-green-600" /> },
     { value: 'inactive', label: 'Inactive Users', icon: <FiUserX className="mr-2 text-red-600" /> }
   ];
-  
+
   const selectedOption = options.find(opt => opt.value === statusFilter) || options[0];
-  
+
   return (
     <div className="relative">
       <button
@@ -106,7 +106,7 @@ const StatusFilter = ({ statusFilter, setStatusFilter }) => {
         </div>
         {isOpen ? <FiChevronUp className="ml-2" /> : <FiChevronDown className="ml-2" />}
       </button>
-      
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -125,7 +125,7 @@ const StatusFilter = ({ statusFilter, setStatusFilter }) => {
                   }}
                   className={`flex items-center w-full px-4 py-2 text-sm ${
                     statusFilter === option.value
-                      ? 'bg-indigo-100 text-indigo-700'
+                      ? 'bg-emerald-100 text-emerald-700'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
@@ -216,13 +216,13 @@ export default function AdminUsersPage() {
             {userStats.total} users · {userStats.activePercentage}% active
           </p>
         </div>
-        
+
         <div className="flex items-center">
-          <Link 
+          <Link
             href={`${process.env.NEXT_PUBLIC_DJANGO_ADMIN_URL || 'http://127.0.0.1:8000/admin'}/auth/user/add/`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
           >
             <FiUser className="mr-2" />
             Add User
@@ -234,7 +234,7 @@ export default function AdminUsersPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
           <div className="flex items-center">
-            <div className="bg-indigo-100 text-indigo-800 p-2 rounded-lg">
+            <div className="bg-emerald-100 text-emerald-800 p-2 rounded-lg">
               <FiUser className="h-6 w-6" />
             </div>
             <div className="ml-4">
@@ -243,7 +243,7 @@ export default function AdminUsersPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
           <div className="flex items-center">
             <div className="bg-green-100 text-green-800 p-2 rounded-lg">
@@ -255,7 +255,7 @@ export default function AdminUsersPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
           <div className="flex items-center">
             <div className="bg-red-100 text-red-800 p-2 rounded-lg">
@@ -279,16 +279,16 @@ export default function AdminUsersPage() {
             <input
               type="text"
               placeholder="Search users by name, email or username..."
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          
+
           <div>
-            <StatusFilter 
-              statusFilter={statusFilter} 
-              setStatusFilter={setStatusFilter} 
+            <StatusFilter
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
             />
           </div>
         </div>
@@ -297,7 +297,7 @@ export default function AdminUsersPage() {
       {error && (
         <div className="mb-6 p-4 bg-red-50 rounded-lg border border-red-200">
           <p className="text-red-700">{error}</p>
-          <button 
+          <button
             onClick={fetchUsers}
             className="mt-2 text-sm font-medium text-red-600 hover:text-red-800 underline"
           >
@@ -314,7 +314,7 @@ export default function AdminUsersPage() {
           <div className="md:hidden space-y-4">
             {users.length > 0 ? (
               users.map((user, index) => (
-                <motion.div 
+                <motion.div
                   key={user.id}
                   className="bg-white rounded-lg border border-gray-100 overflow-hidden shadow-sm"
                   initial={{ opacity: 0, y: 20 }}
@@ -323,7 +323,7 @@ export default function AdminUsersPage() {
                 >
                   <div className="p-4">
                     <div className="flex items-start">
-                      <div className="flex-shrink-0 w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center font-medium text-indigo-800">
+                      <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center font-medium text-emerald-800">
                         {user.first_name?.charAt(0) || user.username.charAt(0)}
                       </div>
                       <div className="ml-4 flex-1">
@@ -331,17 +331,17 @@ export default function AdminUsersPage() {
                           {user.first_name} {user.last_name}
                         </div>
                         <div className="text-sm text-gray-500 mt-1">@{user.username}</div>
-                        <a 
-                          href={`mailto:${user.email}`} 
-                          className="text-indigo-600 hover:text-indigo-800 flex items-center mt-1"
+                        <a
+                          href={`mailto:${user.email}`}
+                          className="text-emerald-600 hover:text-emerald-800 flex items-center mt-1"
                         >
                           <FiMail className="mr-1" />
                           {user.email}
                         </a>
                         <div className="mt-2">
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            user.is_active 
-                              ? 'bg-green-100 text-green-800' 
+                            user.is_active
+                              ? 'bg-green-100 text-green-800'
                               : 'bg-red-100 text-red-800'
                           }`}>
                             {user.is_active ? 'Active' : 'Inactive'}
@@ -354,11 +354,11 @@ export default function AdminUsersPage() {
                     </div>
                   </div>
                   <div className="border-t border-gray-100 px-4 py-3 bg-gray-50 flex justify-end">
-                    <a 
+                    <a
                       href={`${process.env.NEXT_PUBLIC_DJANGO_ADMIN_URL || 'http://127.0.0.1:8000/admin'}/auth/user/${user.id}/change/`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-indigo-600 hover:text-indigo-900 flex items-center text-sm"
+                      className="text-emerald-600 hover:text-emerald-900 flex items-center text-sm"
                     >
                       <FiEdit2 className="mr-1" /> Manage
                     </a>

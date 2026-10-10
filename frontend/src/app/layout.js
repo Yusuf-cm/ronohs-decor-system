@@ -8,7 +8,7 @@ import { CartProvider } from '@/context/CartContext';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import NextTopLoader from 'nextjs-toploader';
-import Script from 'next/script';
+import { Suspense } from 'react';
 import BackToTopButton from '@/components/BackToTopButton';
 
 // Fonts
@@ -57,23 +57,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${playfair.variable} ${lato.variable} scroll-smooth`}>
       <body className="bg-gray-50 font-sans antialiased">
-        {/* Google Analytics */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX');
-          `}
-        </Script>
-
         {/* Page Load Progress Bar */}
-        <NextTopLoader 
-          color="#4f46e5"
+        <NextTopLoader
+          color="#344434"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}
@@ -81,7 +67,7 @@ export default function RootLayout({ children }) {
           showSpinner={false}
           easing="ease"
           speed={200}
-          shadow="0 0 10px #4f46e5,0 0 5px #4f46e5"
+          shadow="0 0 10px #344434,0 0 5px #344434"
         />
 
         {/* Providers */}
@@ -89,16 +75,16 @@ export default function RootLayout({ children }) {
           <CartProvider>
             <div className="flex flex-col min-h-screen">
               {/* Accessibility: Skip Link */}
-              <a 
-                href="#main-content" 
-                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:text-indigo-600 focus:font-bold focus:rounded-lg focus:ring-2 focus:ring-indigo-600"
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:text-emerald-600 focus:font-bold focus:rounded-lg focus:ring-2 focus:ring-emerald-600"
               >
                 Skip to content
               </a>
 
-              <Header />
+              <Suspense fallback={<div className="h-20" />}><Header /></Suspense>
               <main id="main-content" className="flex-grow">
-                {children}
+                <Suspense fallback={<p role="status" className="p-8">Loading page…</p>}>{children}</Suspense>
               </main>
               <Footer />
             </div>
@@ -112,17 +98,17 @@ export default function RootLayout({ children }) {
             duration: 5000,
             style: {
               borderRadius: '8px',
-              background: '#4f46e5',
+              background: '#344434',
               color: '#fff',
               fontWeight: 500,
             },
             success: {
               style: {
-                background: '#4f46e5',
+                background: '#344434',
               },
               iconTheme: {
                 primary: '#fff',
-                secondary: '#4f46e5',
+                secondary: '#344434',
               },
             },
             error: {

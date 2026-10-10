@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import { useCart } from "@/context/CartContext";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,19 +14,19 @@ export default function AddToCartButton({ product }) {
 
   const handleAddToCart = async () => {
     if (isOutOfStock) return;
-    
+
     setIsLoading(true);
-    
+
     try {
       // Simulate API call/processing delay
       await new Promise(resolve => setTimeout(resolve, 500));
-      
+
       addToCart({
         ...product,
         image: product.images?.[0] || '/placeholder.jpg',
         quantity: 1
       });
-      
+
       setIsAdded(true);
       toast.success('Added to cart!', {
         position: 'bottom-right',
@@ -37,7 +37,7 @@ export default function AddToCartButton({ product }) {
           borderRadius: '8px'
         }
       });
-      
+
       // Reset after 2 seconds
       setTimeout(() => {
         setIsAdded(false);
@@ -50,8 +50,8 @@ export default function AddToCartButton({ product }) {
   };
 
   return (
-    <motion.button 
-      whileHover={{ 
+    <motion.button
+      whileHover={{
         scale: isOutOfStock ? 1 : 1.03,
         boxShadow: isOutOfStock ? 'none' : '0px 4px 12px rgba(79, 70, 229, 0.25)'
       }}
@@ -60,11 +60,11 @@ export default function AddToCartButton({ product }) {
       onClick={handleAddToCart}
       disabled={isOutOfStock || isLoading || isAdded}
       className={`mt-4 w-full py-3 px-6 rounded-lg font-bold transition-colors duration-300 flex items-center justify-center gap-2
-        ${isOutOfStock 
-          ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-          : isAdded 
-            ? 'bg-green-600 text-white' 
-            : 'bg-indigo-600 text-white hover:bg-indigo-700'
+        ${isOutOfStock
+          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          : isAdded
+            ? 'bg-green-600 text-white'
+            : 'bg-emerald-600 text-white hover:bg-emerald-700'
         }`}
     >
       <AnimatePresence mode="wait">
