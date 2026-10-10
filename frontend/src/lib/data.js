@@ -1,6 +1,7 @@
+import { API_ORIGIN } from '@/lib/apiConfig';
 // src/lib/data.js
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+const API_URL = `${API_ORIGIN}/api`;
 
 export async function fetchCategories() {
     const res = await fetch(`${API_URL}/categories/`);
@@ -13,7 +14,7 @@ export async function fetchProjectCategories() {
     if (!res.ok) throw new Error('Failed to fetch project categories');
     return res.json();
 }
-  
+
 export async function fetchProductAttributes() {
     const res = await fetch(`${API_URL}/product-attributes/`);
     if (!res.ok) throw new Error('Failed to fetch product attributes');

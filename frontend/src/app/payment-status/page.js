@@ -47,7 +47,7 @@ function StatusPageContent() {
         const api = getAuthenticatedApi({ authTokens, setAuthTokens, logoutUser });
         const data = await api(`/orders/${orderId}/`); // Fetch real order data
         setOrderDetails(data);
-        
+
         // Determine final status based on Stripe redirect_status and fetched order data
         if (paymentStatus === 'succeeded' && data.paid) {
           setStatus('success');
@@ -87,7 +87,7 @@ function StatusPageContent() {
       case 'error':
         return <FiXCircle className="h-16 w-16 text-red-500 mx-auto animate-shake" />;
       default:
-        return <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>;
+        return <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-600"></div>;
     }
   };
 
@@ -128,7 +128,7 @@ function StatusPageContent() {
               </li>
             </ul>
           </div>
-          
+
           {/* Delivery & Contact Info */}
           <div>
             <h3 className="font-medium text-gray-900 flex items-center"><FiTruck className="mr-2" /> Delivery & Contact</h3>
@@ -171,49 +171,49 @@ function StatusPageContent() {
       <div className="mt-10 flex flex-wrap justify-center gap-4">
         {status === 'success' && (
           <>
-            <Link 
-              href="/products" 
-              className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors shadow-md"
+            <Link
+              href="/products"
+              className="px-8 py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-colors shadow-md"
             >
               Continue Shopping
             </Link>
-            <Link 
-              href="/account/orders" 
-              className="px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg border border-indigo-600 hover:bg-indigo-50 transition-colors"
+            <Link
+              href="/account/orders"
+              className="px-8 py-3 bg-white text-emerald-600 font-bold rounded-lg border border-emerald-600 hover:bg-emerald-50 transition-colors"
             >
               View Order History
             </Link>
           </>
         )}
-        
+
         {status === 'processing' && (
-          <Link 
-            href="/account/orders" 
-            className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors shadow-md"
+          <Link
+            href="/account/orders"
+            className="px-8 py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-colors shadow-md"
           >
             Check Order Status
           </Link>
         )}
-        
+
         {status === 'error' && (
           <>
-            <Link 
-              href="/cart/checkout" 
-              className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors shadow-md"
+            <Link
+              href="/cart/checkout"
+              className="px-8 py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-colors shadow-md"
             >
               Try Again
             </Link>
-            <Link 
-              href="/cart" 
-              className="px-8 py-3 bg-white text-indigo-600 font-bold rounded-lg border border-indigo-600 hover:bg-indigo-50 transition-colors"
+            <Link
+              href="/cart"
+              className="px-8 py-3 bg-white text-emerald-600 font-bold rounded-lg border border-emerald-600 hover:bg-emerald-50 transition-colors"
             >
               Review Cart
             </Link>
           </>
         )}
-        
-        <Link 
-          href="/" 
+
+        <Link
+          href="/"
           className="px-8 py-3 bg-gray-100 text-gray-800 font-bold rounded-lg hover:bg-gray-200 transition-colors"
         >
           Back to Home
@@ -227,10 +227,10 @@ function StatusPageContent() {
       <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-12">
         <div className="text-center">
           {renderStatusIcon()}
-          
+
           <h1 className={`mt-6 text-3xl font-bold ${
-            status === 'success' ? 'text-green-600' : 
-            status === 'processing' ? 'text-yellow-600' : 
+            status === 'success' ? 'text-green-600' :
+            status === 'processing' ? 'text-yellow-600' :
             status === 'error' ? 'text-red-600' : 'text-gray-900'
           }`}>
             {status === 'success' && 'Order Confirmed!'}
@@ -238,7 +238,7 @@ function StatusPageContent() {
             {status === 'error' && 'Payment Failed'}
             {status === 'loading' && 'Processing Payment...'}
           </h1>
-          
+
           <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
             {message}
           </p>
@@ -251,8 +251,8 @@ function StatusPageContent() {
       <div className="mt-12 text-center text-gray-600">
         <p>Have questions about your order?</p>
         <p className="mt-2 font-medium">
-          Contact us at <a href="mailto:support@ronohsdecor.com" className="text-indigo-600 hover:underline">support@ronohsdecor.com</a> or 
-          call <a href="tel:+254712345678" className="text-indigo-600 hover:underline">+254 712 345 678</a>
+          Contact us at <a href="mailto:support@ronohsdecor.com" className="text-emerald-600 hover:underline">support@ronohsdecor.com</a> or
+          call <a href="tel:+254712345678" className="text-emerald-600 hover:underline">+254 712 345 678</a>
         </p>
       </div>
     </div>
@@ -265,7 +265,7 @@ export default function PaymentStatusPage() {
         // The Suspense fallback helps manage loading states before useSearchParams is ready
         <Suspense fallback={
           <div className="max-w-4xl mx-auto py-12 px-4 text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600 mb-6"></div>
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-600 mb-6"></div>
             <p className="text-lg text-gray-600">Loading payment status...</p>
           </div>
         }>

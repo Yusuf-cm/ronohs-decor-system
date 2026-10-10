@@ -10,7 +10,7 @@ import { useDebounce } from 'use-debounce';
 
 // Enhanced Product Row Component
 const ProductRow = ({ product, onDelete, index }) => (
-  <motion.tr 
+  <motion.tr
     className="hover:bg-gray-50 border-b border-gray-100"
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -19,10 +19,10 @@ const ProductRow = ({ product, onDelete, index }) => (
     <td className="px-4 py-3 sm:px-6">
       <div className="flex items-center">
         <div className="flex-shrink-0 h-12 w-12 bg-gray-100 rounded-md overflow-hidden">
-          <img 
-            className="h-full w-full object-cover" 
-            src={product.images?.[0] || '/placeholder-image.png'} 
-            alt={product.name} 
+          <img
+            className="h-full w-full object-cover"
+            src={product.images?.[0] || '/placeholder-image.png'}
+            alt={product.name}
             onError={(e) => e.target.src = '/placeholder-image.png'}
           />
         </div>
@@ -45,10 +45,10 @@ const ProductRow = ({ product, onDelete, index }) => (
     </td>
     <td className="px-4 py-3 sm:px-6">
       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-        product.stock > 10 
-          ? 'bg-green-100 text-green-800' 
-          : product.stock > 3 
-            ? 'bg-amber-100 text-amber-800' 
+        product.stock > 10
+          ? 'bg-green-100 text-green-800'
+          : product.stock > 3
+            ? 'bg-amber-100 text-amber-800'
             : 'bg-red-100 text-red-800'
       }`}>
         {product.stock} in stock
@@ -56,18 +56,18 @@ const ProductRow = ({ product, onDelete, index }) => (
     </td>
     <td className="px-4 py-3 sm:px-6 text-right text-sm font-medium">
       <div className="flex justify-end space-x-3">
-        <Link 
+        <Link
           href={`${process.env.NEXT_PUBLIC_DJANGO_ADMIN_URL || 'http://127.0.0.1:8000/admin'}/api/product/${product.id}/change/`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-indigo-600 hover:text-indigo-900 flex items-center"
+          className="text-emerald-600 hover:text-emerald-900 flex items-center"
           title="Edit product"
         >
-          <FiEdit className="mr-1" /> 
+          <FiEdit className="mr-1" />
           <span className="hidden sm:inline">Edit</span>
         </Link>
-        <button 
-          onClick={() => onDelete(product.id, product.name)} 
+        <button
+          onClick={() => onDelete(product.id, product.name)}
           className="text-red-600 hover:text-red-900 flex items-center"
           title="Delete product"
         >
@@ -84,7 +84,7 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, productName }) => (
   <AnimatePresence>
     {isOpen && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <motion.div 
+        <motion.div
           className="bg-white rounded-xl shadow-lg max-w-md w-full"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -160,7 +160,7 @@ export default function AdminProductsPage() {
     if (!authTokens) return;
     setLoading(true);
     setError('');
-    
+
     const params = new URLSearchParams();
     if (debouncedSearch) params.append('search', debouncedSearch);
     if (selectedCategory !== 'all') params.append('category', selectedCategory);
@@ -193,7 +193,7 @@ export default function AdminProductsPage() {
   useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
-  
+
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
@@ -201,13 +201,13 @@ export default function AdminProductsPage() {
 
   const handleDelete = async () => {
     if (!deleteModal.productId) return;
-    
+
     try {
       const api = getAuthenticatedApi({ authTokens, setAuthTokens, logoutUser });
       await api(`/admin/products/${deleteModal.productId}/delete/`, { method: 'DELETE' });
-      
+
       setProducts(prev => prev.filter(p => p.id !== deleteModal.productId));
-      
+
       setDeleteModal({ isOpen: false, productId: null, productName: '' });
     } catch (err) {
       setError('Failed to delete product. It might be part of an existing order.');
@@ -225,7 +225,7 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="pb-16"
@@ -237,13 +237,13 @@ export default function AdminProductsPage() {
             {products.length} products found
           </p>
         </div>
-        
+
         <div className="flex flex-wrap gap-3">
-          <Link 
+          <Link
             href={`${process.env.NEXT_PUBLIC_DJANGO_ADMIN_URL || 'http://127.0.0.1:8000/admin'}/api/product/add/`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
           >
             <FiPlus className="mr-2" />
             Add Product
@@ -261,16 +261,16 @@ export default function AdminProductsPage() {
             <input
               type="text"
               placeholder="Search products by name, SKU or description..."
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
             <select
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
@@ -282,11 +282,11 @@ export default function AdminProductsPage() {
               ))}
             </select>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Stock Status</label>
             <select
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
               value={stockFilter}
               onChange={(e) => setStockFilter(e.target.value)}
             >
@@ -312,7 +312,7 @@ export default function AdminProductsPage() {
           <div className="md:hidden space-y-4">
             {products.length > 0 ? (
               products.map((product, index) => (
-                <motion.div 
+                <motion.div
                   key={product.id}
                   className="bg-white rounded-lg border border-gray-100 overflow-hidden shadow-sm"
                   initial={{ opacity: 0, y: 20 }}
@@ -322,10 +322,10 @@ export default function AdminProductsPage() {
                   <div className="p-4">
                     <div className="flex items-start">
                       <div className="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                        <img 
-                          className="h-full w-full object-cover" 
-                          src={product.images?.[0] || '/placeholder-image.png'} 
-                          alt={product.name} 
+                        <img
+                          className="h-full w-full object-cover"
+                          src={product.images?.[0] || '/placeholder-image.png'}
+                          alt={product.name}
                           onError={(e) => e.target.src = '/placeholder-image.png'}
                         />
                       </div>
@@ -334,10 +334,10 @@ export default function AdminProductsPage() {
                         <div className="text-sm text-gray-500 mt-1">SKU: {product.sku || 'N/A'}</div>
                         <div className="flex items-center mt-2">
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            product.stock > 10 
-                              ? 'bg-green-100 text-green-800' 
-                              : product.stock > 3 
-                                ? 'bg-amber-100 text-amber-800' 
+                            product.stock > 10
+                              ? 'bg-green-100 text-green-800'
+                              : product.stock > 3
+                                ? 'bg-amber-100 text-amber-800'
                                 : 'bg-red-100 text-red-800'
                           }`}>
                             {product.stock} in stock
@@ -350,16 +350,16 @@ export default function AdminProductsPage() {
                     </div>
                   </div>
                   <div className="border-t border-gray-100 px-4 py-3 bg-gray-50 flex justify-end space-x-3">
-                    <Link 
+                    <Link
                       href={`${process.env.NEXT_PUBLIC_DJANGO_ADMIN_URL || 'http://127.0.0.1:8000/admin'}/api/product/${product.id}/change/`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-indigo-600 hover:text-indigo-900 flex items-center text-sm"
+                      className="text-emerald-600 hover:text-emerald-900 flex items-center text-sm"
                     >
                       <FiEdit className="mr-1" /> Edit
                     </Link>
-                    <button 
-                      onClick={() => openDeleteModal(product.id, product.name)} 
+                    <button
+                      onClick={() => openDeleteModal(product.id, product.name)}
                       className="text-red-600 hover:text-red-900 flex items-center text-sm"
                     >
                       <FiTrash2 className="mr-1" /> Delete
@@ -397,10 +397,10 @@ export default function AdminProductsPage() {
                 <tbody className="bg-white divide-y divide-gray-100">
                   {products.length > 0 ? (
                     products.map((product, index) => (
-                      <ProductRow 
-                        key={product.id} 
-                        product={product} 
-                        onDelete={openDeleteModal} 
+                      <ProductRow
+                        key={product.id}
+                        product={product}
+                        onDelete={openDeleteModal}
                         index={index}
                       />
                     ))
@@ -426,7 +426,7 @@ export default function AdminProductsPage() {
         </>
       )}
 
-      <DeleteModal 
+      <DeleteModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, productId: null, productName: '' })}
         onConfirm={handleDelete}

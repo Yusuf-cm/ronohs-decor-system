@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 // --- START OF FIX ---
 // The component no longer needs its own form tag or onSubmit handler passed in.
 // We pass the handleSubmit function directly to the button's onClick handler.
-export default function CheckoutForm({ orderId }) { 
+export default function CheckoutForm({ orderId }) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -39,20 +39,20 @@ export default function CheckoutForm({ orderId }) {
         toast.error("An unexpected error occurred during payment.");
       }
     }
-    
+
     // This part is only reached if there's an immediate error.
     setIsLoading(false);
   };
 
   // Note: The <form> tag is removed. We return a React Fragment <>...</> instead.
   return (
-    <> 
+    <>
       <PaymentElement id="payment-element" />
-      <button 
+      <button
         onClick={handleSubmit} // We now use onClick for the button
-        disabled={isLoading || !stripe || !elements} 
+        disabled={isLoading || !stripe || !elements}
         id="submit"
-        className="mt-8 w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-gray-400 transition-colors"
+        className="mt-8 w-full bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-emerald-700 disabled:bg-gray-400 transition-colors"
       >
         <span id="button-text">
           {isLoading ? (

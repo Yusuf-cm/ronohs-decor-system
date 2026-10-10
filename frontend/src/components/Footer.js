@@ -13,7 +13,7 @@ export default function Footer() {
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          
+
           <div className="lg:col-span-2">
             <h3 className="text-2xl font-serif font-bold">Ronohs Decor</h3>
             <p className="mt-4 text-gray-400 max-w-md">
@@ -28,21 +28,21 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold uppercase tracking-wider">Navigation</h3>
             <ul className="mt-4 space-y-3">
-              <li><Link href="/" className="hover:text-indigo-400 transition-colors">Home</Link></li>
-              <li><Link href="/products" className="hover:text-indigo-400 transition-colors">Shop All</Link></li>
-              <li><Link href="/portfolio" className="hover:text-indigo-400 transition-colors">Portfolio</Link></li>
-              <li><Link href="/services" className="hover:text-indigo-400 transition-colors">Design Services</Link></li>
-              <li><Link href="/blog" className="hover:text-indigo-400 transition-colors">Blog</Link></li>
+              <li><Link href="/" className="hover:text-emerald-400 transition-colors">Home</Link></li>
+              <li><Link href="/products" className="hover:text-emerald-400 transition-colors">Shop All</Link></li>
+              <li><Link href="/portfolio" className="hover:text-emerald-400 transition-colors">Portfolio</Link></li>
+              <li><Link href="/services" className="hover:text-emerald-400 transition-colors">Design Services</Link></li>
+              <li><Link href="/blog" className="hover:text-emerald-400 transition-colors">Blog</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold uppercase tracking-wider">Support</h3>
             <ul className="mt-4 space-y-3">
-              <li><Link href="/contact" className="hover:text-indigo-400 transition-colors">Contact Us</Link></li>
-              <li><Link href="/faq" className="hover:text-indigo-400 transition-colors">FAQs</Link></li>
-              <li><Link href="/shipping" className="hover:text-indigo-400 transition-colors">Shipping & Returns</Link></li>
-              <li><Link href="/terms" className="hover:text-indigo-400 transition-colors">Terms & Conditions</Link></li>
+              <li><Link href="/contact" className="hover:text-emerald-400 transition-colors">Contact Us</Link></li>
+              <li><Link href="/faq" className="hover:text-emerald-400 transition-colors">FAQs</Link></li>
+              <li><Link href="/shipping" className="hover:text-emerald-400 transition-colors">Shipping & Returns</Link></li>
+              <li><Link href="/terms" className="hover:text-emerald-400 transition-colors">Terms & Conditions</Link></li>
             </ul>
           </div>
 
@@ -65,14 +65,14 @@ export default function Footer() {
             <div className="mt-6">
               <h4 className="text-lg font-semibold mb-3">Follow Us</h4>
               <div className="flex space-x-4">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="bg-gray-800 hover:bg-indigo-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors" aria-label="Instagram"><FiInstagram className="h-5 w-5" /></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="bg-gray-800 hover:bg-indigo-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors" aria-label="Facebook"><FiFacebook className="h-5 w-5" /></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-800 hover:bg-indigo-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors" aria-label="Twitter"><FiTwitter className="h-5 w-5" /></a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="bg-gray-800 hover:bg-emerald-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors" aria-label="Instagram"><FiInstagram className="h-5 w-5" /></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="bg-gray-800 hover:bg-emerald-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors" aria-label="Facebook"><FiFacebook className="h-5 w-5" /></a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-800 hover:bg-emerald-600 h-10 w-10 rounded-full flex items-center justify-center transition-colors" aria-label="Twitter"><FiTwitter className="h-5 w-5" /></a>
               </div>
             </div>
           </div>
         </div>
-        
+
         <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-wrap justify-center gap-4">
             {['visa', 'mastercard', 'paypal', 'mpesa'].map((method) => (

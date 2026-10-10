@@ -29,6 +29,7 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
   const totalCartItems = cartItems.reduce(
@@ -47,8 +48,9 @@ export default function Header() {
   const authLinksDesktop = user ? (
     <div className="relative">
       <button
+        aria-label="Account menu" aria-expanded={isAccountOpen}
         onClick={() => setIsAccountOpen(!isAccountOpen)}
-        className="flex items-center text-gray-600 hover:text-indigo-600 transition-colors"
+        className="flex items-center text-gray-600 hover:text-emerald-600 transition-colors"
       >
         <FiUser className="h-5 w-5" />
       </button>
@@ -80,7 +82,7 @@ export default function Header() {
               My Orders
             </Link>
             <Link
-              href="/account/wishlist"
+              aria-label="Wishlist" href="/account/wishlist"
               onClick={() => setIsAccountOpen(false)}
               className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
             >
@@ -101,8 +103,8 @@ export default function Header() {
     </div>
   ) : (
     <Link
-      href="/login"
-      className="text-gray-600 hover:text-indigo-600 transition-colors"
+      aria-label="Log in" href="/login"
+      className="text-gray-600 hover:text-emerald-600 transition-colors"
     >
       <FiUser className="h-5 w-5" />
     </Link>
@@ -119,7 +121,7 @@ export default function Header() {
         My Account
       </Link>
       <Link
-        href="/account/wishlist"
+        aria-label="Wishlist" href="/account/wishlist"
         onClick={toggleMenu}
         className="flex items-center px-4 py-3 text-base font-medium text-gray-700 hover:bg-gray-50"
       >
@@ -140,7 +142,7 @@ export default function Header() {
   ) : (
     <>
       <Link
-        href="/login"
+        aria-label="Log in" href="/login"
         onClick={toggleMenu}
         className="flex items-center px-4 py-3 text-base font-medium text-gray-700 hover:bg-gray-50"
       >
@@ -179,7 +181,7 @@ export default function Header() {
                 height={36}
                 priority
               />
-              <span className="text-2xl font-serif font-bold text-gray-900 group-hover:text-indigo-600">
+              <span className="text-2xl font-serif font-bold text-gray-900 group-hover:text-emerald-600">
                 Ronohs Decor
               </span>
             </Link>
@@ -191,7 +193,7 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-gray-600 hover:text-indigo-600 font-medium transition-colors"
+                className="text-gray-600 hover:text-emerald-600 font-medium transition-colors"
               >
                 {link.name}
               </Link>
@@ -205,8 +207,8 @@ export default function Header() {
             </div>
             {authLinksDesktop}
             <Link
-              href="/account/wishlist"
-              className="text-gray-600 hover:text-indigo-600 transition-colors relative"
+              aria-label="Wishlist" href="/account/wishlist"
+              className="text-gray-600 hover:text-emerald-600 transition-colors relative"
             >
               <FiHeart className="h-5 w-5" />
               {wishlistCount > 0 && (
@@ -217,12 +219,12 @@ export default function Header() {
             </Link>
             <div className="flow-root">
               <Link
-                href="/cart"
+                aria-label="Shopping cart" href="/cart"
                 className="group -m-2 p-2 flex items-center relative"
               >
-                <FiShoppingCart className="h-5 w-5 text-gray-600 group-hover:text-indigo-600 transition-colors" />
+                <FiShoppingCart className="h-5 w-5 text-gray-600 group-hover:text-emerald-600 transition-colors" />
                 {totalCartItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-emerald-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {totalCartItems}
                   </span>
                 )}
@@ -234,7 +236,7 @@ export default function Header() {
           <div className="lg:hidden flex items-center space-x-4">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-indigo-600"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-emerald-600"
             >
               <span className="sr-only">Open main menu</span>
               {isOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}

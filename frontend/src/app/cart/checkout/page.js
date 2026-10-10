@@ -21,8 +21,8 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 export default function CheckoutPage() {
   const [clientSecret, setClientSecret] = useState('');
   const [orderId, setOrderId] = useState(null);
-  const { cartItems, cartTotal, removeFromCart, updateQuantity } = useCart();
-  const { user, authTokens, setAuthTokens, logoutUser } = useAuth();
+  const { cartItems, cartTotal, removeFromCart, updateQuantity, hydrated } = useCart();
+  const { user, authTokens, setAuthTokens, logoutUser, loading: authLoading } = useAuth();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
@@ -63,14 +63,15 @@ export default function CheckoutPage() {
   }, [user]);
 
   useEffect(() => {
-    if (cartItems.length === 0 && !isValidating && !paymentComplete) {
+    if (hydrated && !authLoading && cartItems.length === 0 && !isValidating && !paymentComplete) {
       toast.error('Your cart is empty!');
       router.push('/products');
     }
-  }, [cartItems, isValidating, paymentComplete, router]);
+  }, [cartItems, hydrated, authLoading, isValidating, paymentComplete, router]);
 
 
   useEffect(() => {
+    if (authLoading || !hydrated) return;
     if (!authTokens) {
         if (!user && !isValidating) { // Prevent redirection while auth is still loading
              router.push('/login?next=/cart/checkout');
@@ -118,7 +119,7 @@ export default function CheckoutPage() {
     };
 
     validateCart();
-  }, [cartItems, authTokens, setAuthTokens, logoutUser, removeFromCart, updateQuantity, user, isValidating]);
+  }, [cartItems, authTokens, setAuthTokens, logoutUser, removeFromCart, updateQuantity, user, authLoading, hydrated]);
 
 
   const [formErrors, setFormErrors] = useState({});
@@ -151,9 +152,9 @@ export default function CheckoutPage() {
       setIsSubmitting(false);
       return false; // Indicate failure
     }
-    
+
     const itemsForBackend = cartItems.map(item => ({ id: item.id, quantity: item.quantity }));
-    
+
     try {
       const api = getAuthenticatedApi({ authTokens, setAuthTokens, logoutUser });
       const res = await api('/create-payment-intent/', {
@@ -179,7 +180,7 @@ export default function CheckoutPage() {
   const handleProceed = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    
+
     if (step < 2) {
       setStep(step + 1);
     } else if (step === 2) {
@@ -268,7 +269,7 @@ export default function CheckoutPage() {
           </div>
         ) : (
           <div className="text-center py-8">
-            <div className="h-12 w-12 mx-auto border-t-4 border-indigo-600 rounded-full animate-spin mb-4"></div>
+            <div className="h-12 w-12 mx-auto border-t-4 border-emerald-600 rounded-full animate-spin mb-4"></div>
             <p>Preparing payment gateway...</p>
           </div>
         );
@@ -280,7 +281,7 @@ export default function CheckoutPage() {
   if (isValidating) {
     return (
       <div className="max-w-2xl mx-auto py-16 px-4 text-center">
-        <div className="h-12 w-12 mx-auto border-t-4 border-indigo-600 rounded-full animate-spin mb-4"></div>
+        <div className="h-12 w-12 mx-auto border-t-4 border-emerald-600 rounded-full animate-spin mb-4"></div>
         <h1 className="text-xl font-semibold">Verifying your cart...</h1>
       </div>
     );
@@ -289,7 +290,7 @@ export default function CheckoutPage() {
     return (
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
             <div className="flex items-center mb-6">
-                <Link href="/cart" className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors">
+                <Link href="/cart" className="flex items-center text-emerald-600 hover:text-emerald-800 transition-colors">
                     <FiArrowLeft className="mr-2" />Back to Cart
                 </Link>
                 <h1 className="text-3xl font-bold text-gray-900 ml-8">Checkout</h1>
@@ -308,7 +309,7 @@ export default function CheckoutPage() {
                     </div>
                 </div>
             )}
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2">
                     <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
@@ -316,16 +317,16 @@ export default function CheckoutPage() {
                             <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-200 -z-10"></div>
                             {[1, 2, 3].map((stepNum, index) => (
                                 <div key={stepNum} className="flex flex-col items-center relative">
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step === stepNum ? 'bg-indigo-600 text-white border-2 border-indigo-600' : step > stepNum ? 'bg-green-500 text-white border-2 border-green-500' : 'bg-white text-gray-500 border-2 border-gray-300'}`}>
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step === stepNum ? 'bg-emerald-600 text-white border-2 border-emerald-600' : step > stepNum ? 'bg-green-500 text-white border-2 border-green-500' : 'bg-white text-gray-500 border-2 border-gray-300'}`}>
                                         {step > stepNum ? <FiCheck className="w-5 h-5" /> : stepNum}
                                     </div>
-                                    <span className={`mt-2 text-sm font-medium ${step === stepNum ? 'text-indigo-600' : 'text-gray-500'}`}>
+                                    <span className={`mt-2 text-sm font-medium ${step === stepNum ? 'text-emerald-600' : 'text-gray-500'}`}>
                                         {['Contact', 'Shipping', 'Payment'][index]}
                                     </span>
                                 </div>
                             ))}
                         </div>
-                        
+
                         {step < 3 ? (
                             <form onSubmit={handleProceed} noValidate>
                                 {renderStepContent()}
@@ -333,7 +334,7 @@ export default function CheckoutPage() {
                                     {step > 1 && (
                                         <button type="button" onClick={() => setStep(step - 1)} className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50">Back</button>
                                     )}
-                                    <button type="submit" disabled={isSubmitting} className={`ml-auto px-6 py-3 font-medium rounded-lg shadow-md transition-colors ${isSubmitting ? 'bg-gray-400' : 'bg-indigo-600 text-white hover:bg-indigo-700'} disabled:cursor-not-allowed`}>
+                                    <button type="submit" disabled={isSubmitting} className={`ml-auto px-6 py-3 font-medium rounded-lg shadow-md transition-colors ${isSubmitting ? 'bg-gray-400' : 'bg-emerald-600 text-white hover:bg-emerald-700'} disabled:cursor-not-allowed`}>
                                         {isSubmitting ? 'Processing...' : (step === 1 ? 'Continue to Shipping' : 'Continue to Payment')}
                                     </button>
                                 </div>

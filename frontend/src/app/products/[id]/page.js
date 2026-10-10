@@ -1,3 +1,4 @@
+import { API_ORIGIN } from '@/lib/apiConfig';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import AddToCartButton from './components/AddToCartButton';
@@ -7,7 +8,7 @@ import { FiCheckCircle, FiShield, FiTruck } from 'react-icons/fi';
 
 async function getProduct(id) {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products/${id}/`, {
+      const res = await fetch(`${API_ORIGIN}/api/products/${id}/`, {
         cache: 'no-store'
     });
         if (!res.ok && res.status === 404) {
@@ -24,7 +25,7 @@ async function getProduct(id) {
 }
 
 export async function generateMetadata({ params }) {
-    const product = await getProduct(params.id);
+    const product = await getProduct((await params).id);
     if (!product) {
         return {
             title: 'Product Not Found',
@@ -32,18 +33,18 @@ export async function generateMetadata({ params }) {
     }
     return {
         title: `${product.name} | Ronohs Decor`,
-        description: product.description.substring(0, 160),
+        description: (product.description || product.name).substring(0, 160),
     };
 }
 
 export default async function ProductDetailPage({ params }) {
-    const { id } = params;
+    const { id } = await params;
     const product = await getProduct(id);
 
     if (!product) {
         notFound();
     }
-    
+
     const price = parseFloat(product.price) || 0;
     const originalPrice = parseFloat(product.original_price) || 0;
     const discountPercent = originalPrice > price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
@@ -71,7 +72,7 @@ export default async function ProductDetailPage({ params }) {
                         {product.images?.length > 1 && (
                             <div className="mt-4 grid grid-cols-5 gap-4">
                                 {product.images.slice(0, 5).map((img, index) => (
-                                    <div key={index} className="aspect-square relative bg-gray-100 rounded-lg overflow-hidden border-2 hover:border-indigo-500 cursor-pointer">
+                                    <div key={index} className="aspect-square relative bg-gray-100 rounded-lg overflow-hidden border-2 hover:border-emerald-500 cursor-pointer">
                                         <Image src={img} alt={`${product.name} thumbnail ${index + 1}`} fill className="object-cover" sizes="100px" />
                                     </div>
                                 ))}
@@ -81,7 +82,7 @@ export default async function ProductDetailPage({ params }) {
 
                     {/* Product Info */}
                     <div>
-                        <p className="text-sm font-medium text-indigo-600">{product.category.name}</p>
+                        <p className="text-sm font-medium text-emerald-600">{product.category?.name || 'Collection'}</p>
                         <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 font-serif tracking-tight">{product.name}</h1>
 
                         <div className="mt-4 flex items-center">
@@ -113,7 +114,7 @@ export default async function ProductDetailPage({ params }) {
                         <div className="mt-6 prose prose-indigo text-gray-700">
                            <p>{product.description || 'No description available.'}</p>
                         </div>
-                        
+
                         <div className="mt-8">
                             {product.stock > 0 ? (
                                 <p className="flex items-center text-green-600 font-medium">
@@ -136,14 +137,14 @@ export default async function ProductDetailPage({ params }) {
 
                         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
                             <div className="flex items-center p-4 bg-gray-50 rounded-lg">
-                                <FiTruck className="h-6 w-6 mr-3 text-indigo-600"/>
+                                <FiTruck className="h-6 w-6 mr-3 text-emerald-600"/>
                                 <div>
                                     <span className="font-semibold">Nationwide Delivery</span>
                                     <p className="text-xs">Delivered to your doorstep.</p>
                                 </div>
                             </div>
                             <div className="flex items-center p-4 bg-gray-50 rounded-lg">
-                                <FiShield className="h-6 w-6 mr-3 text-indigo-600"/>
+                                <FiShield className="h-6 w-6 mr-3 text-emerald-600"/>
                                 <div>
                                     <span className="font-semibold">Secure Payments</span>
                                     <p className="text-xs">Card & M-Pesa accepted.</p>

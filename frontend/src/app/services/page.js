@@ -1,10 +1,12 @@
-'use client'; // <-- THIS IS THE FIX
+'use client';
+ // <-- THIS IS THE FIX
+import { API_ORIGIN } from '@/lib/apiConfig';
 
 import { useState } from 'react';
 
 async function getPublicStats() {
   try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/public-stats/`, { next: { revalidate: 3600 } }); // Revalidate every hour
+      const res = await fetch(`${API_ORIGIN}/public-stats/`, { next: { revalidate: 3600 } }); // Revalidate every hour
       if (!res.ok) return null;
       return res.json();
   } catch (error) {
@@ -22,22 +24,22 @@ const Icon = ({ d, className }) => (
 
 // Service Card Component
 const ServiceCard = ({ icon, title, description, active, onClick }) => (
-  <div 
+  <div
     onClick={onClick}
     className={`cursor-pointer p-8 rounded-2xl transition-all duration-300 border-2 ${
-      active 
-        ? 'border-indigo-600 bg-indigo-50 shadow-lg transform -translate-y-2' 
-        : 'border-gray-200 hover:border-indigo-300'
+      active
+        ? 'border-emerald-600 bg-emerald-50 shadow-lg transform -translate-y-2'
+        : 'border-gray-200 hover:border-emerald-300'
     }`}
   >
     <div className={`flex items-center justify-center h-20 w-20 rounded-full mx-auto ${
-      active ? 'bg-indigo-600 text-white' : 'bg-indigo-100 text-indigo-600'
+      active ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-600'
     }`}>
       {icon}
     </div>
     <h3 className="mt-6 text-2xl font-bold text-gray-900">{title}</h3>
     <p className="mt-4 text-lg text-gray-600">{description}</p>
-    
+
     {active && (
       <div className="mt-6 space-y-4">
         <div className="flex items-start">
@@ -60,10 +62,10 @@ const ServiceCard = ({ icon, title, description, active, onClick }) => (
         </div>
       </div>
     )}
-    
+
     <div className="mt-6">
       <button className={`font-medium ${
-        active ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600'
+        active ? 'text-emerald-600' : 'text-gray-500 hover:text-emerald-600'
       }`}>
         Learn more →
       </button>
@@ -73,7 +75,7 @@ const ServiceCard = ({ icon, title, description, active, onClick }) => (
 
 export default function ServicesPage() {
   const [activeService, setActiveService] = useState(0);
-  
+
   const services = [
     {
       icon: <Icon d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" className="w-8 h-8"/>,
@@ -104,11 +106,11 @@ export default function ServicesPage() {
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Transform Your Space
             </h1>
-            <p className="mt-6 text-xl text-indigo-200 max-w-2xl">
+            <p className="mt-6 text-xl text-emerald-200 max-w-2xl">
               From a simple room refresh to a complete home renovation, we provide end-to-end solutions tailored to you.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <button className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+              <button className="px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors">
                 Book a Consultation
               </button>
               <button className="px-6 py-3 bg-white text-gray-900 font-medium rounded-lg hover:bg-gray-100 transition-colors">
@@ -129,10 +131,10 @@ export default function ServicesPage() {
             We offer comprehensive design solutions for every space and budget
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <ServiceCard 
+            <ServiceCard
               key={index}
               icon={service.icon}
               title={service.title}
@@ -145,20 +147,20 @@ export default function ServicesPage() {
       </div>
 
       {/* Stats Section */}
-      <div className="bg-indigo-700 py-16">
+      <div className="bg-emerald-700 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="p-6">
               <p className="text-5xl font-extrabold text-white">500+</p>
-              <p className="mt-2 text-lg font-medium text-indigo-200">Projects Completed</p>
+              <p className="mt-2 text-lg font-medium text-emerald-200">Projects Completed</p>
             </div>
             <div className="p-6">
               <p className="text-5xl font-extrabold text-white">98%</p>
-              <p className="mt-2 text-lg font-medium text-indigo-200">Client Satisfaction</p>
+              <p className="mt-2 text-lg font-medium text-emerald-200">Client Satisfaction</p>
             </div>
             <div className="p-6">
               <p className="text-5xl font-extrabold text-white">15+</p>
-              <p className="mt-2 text-lg font-medium text-indigo-200">Years of Experience</p>
+              <p className="mt-2 text-lg font-medium text-emerald-200">Years of Experience</p>
             </div>
           </div>
         </div>
@@ -173,7 +175,7 @@ export default function ServicesPage() {
               A seamless journey from concept to completion
             </p>
           </div>
-          
+
           <div className="space-y-12">
             {[
               {
@@ -197,13 +199,13 @@ export default function ServicesPage() {
             ].map((item, index) => (
               <div key={index} className="flex flex-col md:flex-row items-start">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-16 w-16 rounded-full bg-white border-2 border-indigo-600 text-indigo-600">
+                  <div className="flex items-center justify-center h-16 w-16 rounded-full bg-white border-2 border-emerald-600 text-emerald-600">
                     {item.icon}
                   </div>
                 </div>
                 <div className="mt-6 md:mt-0 md:ml-8">
                   <div className="flex items-center">
-                    <span className="text-2xl font-bold text-indigo-600">{item.step}</span>
+                    <span className="text-2xl font-bold text-emerald-600">{item.step}</span>
                     <h3 className="ml-4 text-xl font-bold text-gray-900">{item.title}</h3>
                   </div>
                   <p className="mt-4 text-lg text-gray-600">{item.description}</p>
@@ -223,7 +225,7 @@ export default function ServicesPage() {
               Don't just take our word for it - hear from our satisfied clients
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((item) => (
               <div key={item} className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
@@ -248,7 +250,7 @@ export default function ServicesPage() {
                   <div className="bg-gray-200 border-2 border-dashed rounded-full w-12 h-12" />
                   <div className="ml-4">
                     <p className="text-lg font-bold text-gray-900">Sarah Johnson</p>
-                    <p className="text-indigo-600">Nairobi Residence Project</p>
+                    <p className="text-emerald-600">Nairobi Residence Project</p>
                   </div>
                 </div>
               </div>
@@ -258,21 +260,21 @@ export default function ServicesPage() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-indigo-700">
+      <div className="bg-emerald-700">
         <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
               Ready to transform your space?
             </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-xl text-indigo-200">
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-emerald-200">
               Schedule a free consultation with our design experts today
             </p>
             <div className="mt-10 flex justify-center">
-              <button className="px-8 py-4 bg-white text-indigo-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-colors text-lg">
+              <button className="px-8 py-4 bg-white text-emerald-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-colors text-lg">
                 Book Your Consultation
               </button>
             </div>
-            <p className="mt-6 text-indigo-300">
+            <p className="mt-6 text-emerald-300">
               Or call us at <span className="font-semibold text-white">+254 712 345 678</span>
             </p>
           </div>

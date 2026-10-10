@@ -1,5 +1,7 @@
-// src/app/reset-password/[uid]/[token]/page.js
 'use client';
+import { API_ORIGIN } from '@/lib/apiConfig';
+// src/app/reset-password/[uid]/[token]/page.js
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiEye, FiEyeOff, FiLock, FiCheck } from 'react-icons/fi';
@@ -8,7 +10,7 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 export default function ResetPasswordConfirmPage({ params }) {
     const { uid, token } = params;
     const router = useRouter();
-    
+
     const [formData, setFormData] = useState({
         newPassword1: '',
         newPassword2: ''
@@ -19,7 +21,7 @@ export default function ResetPasswordConfirmPage({ params }) {
     const [showPasswords, setShowPasswords] = useState([false, false]);
     const [passwordScore, setPasswordScore] = useState(0);
     const [expiredToken, setExpiredToken] = useState(false);
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const API_BASE_URL = API_ORIGIN;
 
     useEffect(() => {
         // Check token expiration on mount
@@ -79,21 +81,21 @@ export default function ResetPasswordConfirmPage({ params }) {
             setIsLoading(false);
             return;
         }
-        
+
         try {
             const res = await fetch(`${API_BASE_URL}/auth/password-reset/confirm/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    uid, 
-                    token, 
-                    new_password1: formData.newPassword1, 
-                    new_password2: formData.newPassword2 
+                body: JSON.stringify({
+                    uid,
+                    token,
+                    new_password1: formData.newPassword1,
+                    new_password2: formData.newPassword2
                 }),
             });
 
             const data = await res.json();
-            
+
             if (!res.ok) {
                 // Handle specific errors
                 if (data.new_password2) {
@@ -101,7 +103,7 @@ export default function ResetPasswordConfirmPage({ params }) {
                 }
                 throw new Error(data.detail || 'Something went wrong');
             }
-            
+
             setMessage(data.detail);
             setTimeout(() => router.push('/login'), 3000);
 
@@ -125,7 +127,7 @@ export default function ResetPasswordConfirmPage({ params }) {
                     </p>
                     <button
                         onClick={() => router.push('/forgot-password')}
-                        className="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors"
+                        className="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors"
                     >
                         Request New Reset Link
                     </button>
@@ -137,15 +139,15 @@ export default function ResetPasswordConfirmPage({ params }) {
     return (
         <div className="max-w-md mx-auto mt-10 p-8 bg-white rounded-xl shadow-lg border border-gray-100">
             <div className="text-center mb-8">
-                <div className="mx-auto bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                    <FiLock className="h-8 w-8 text-indigo-600" />
+                <div className="mx-auto bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <FiLock className="h-8 w-8 text-emerald-600" />
                 </div>
                 <h1 className="text-2xl font-bold">Set a New Password</h1>
                 <p className="mt-2 text-gray-600">
                     Create a strong, secure password for your account
                 </p>
             </div>
-            
+
             {message ? (
                 <div className="text-center py-6">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
@@ -157,7 +159,7 @@ export default function ResetPasswordConfirmPage({ params }) {
                     </p>
                     <button
                         onClick={() => router.push('/login')}
-                        className="text-indigo-600 hover:underline font-medium"
+                        className="text-emerald-600 hover:underline font-medium"
                     >
                         Go to Login Now
                     </button>
@@ -170,17 +172,17 @@ export default function ResetPasswordConfirmPage({ params }) {
                                 <FiLock className="mr-2" /> New Password
                             </label>
                             <div className="relative">
-                                <input 
+                                <input
                                     id="newPassword1"
                                     name="newPassword1"
-                                    type={showPasswords[0] ? "text" : "password"} 
-                                    placeholder="Create a strong password" 
-                                    value={formData.newPassword1} 
-                                    onChange={handleChange} 
-                                    required 
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent pr-10" 
+                                    type={showPasswords[0] ? "text" : "password"}
+                                    placeholder="Create a strong password"
+                                    value={formData.newPassword1}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent pr-10"
                                 />
-                                <button 
+                                <button
                                     type="button"
                                     onClick={() => togglePasswordVisibility(0)}
                                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
@@ -188,37 +190,37 @@ export default function ResetPasswordConfirmPage({ params }) {
                                     {showPasswords[0] ? <FiEyeOff className="h-5 w-5" /> : <FiEye className="h-5 w-5" />}
                                 </button>
                             </div>
-                            
+
                             {formData.newPassword1 && (
-                                <PasswordStrengthBar 
-                                    password={formData.newPassword1} 
+                                <PasswordStrengthBar
+                                    password={formData.newPassword1}
                                     minLength={8}
                                     onChangeScore={(score) => setPasswordScore(score)}
                                     className="mt-2"
                                 />
                             )}
-                            
+
                             <div className="text-xs text-gray-500 mt-2">
                                 Use at least 8 characters with a mix of letters, numbers & symbols
                             </div>
                         </div>
-                        
+
                         <div className="space-y-2">
                             <label htmlFor="newPassword2" className="block text-sm font-medium text-gray-700 flex items-center">
                                 <FiLock className="mr-2" /> Confirm New Password
                             </label>
                             <div className="relative">
-                                <input 
+                                <input
                                     id="newPassword2"
                                     name="newPassword2"
-                                    type={showPasswords[1] ? "text" : "password"} 
-                                    placeholder="Confirm your password" 
-                                    value={formData.newPassword2} 
-                                    onChange={handleChange} 
-                                    required 
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent pr-10" 
+                                    type={showPasswords[1] ? "text" : "password"}
+                                    placeholder="Confirm your password"
+                                    value={formData.newPassword2}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent pr-10"
                                 />
-                                <button 
+                                <button
                                     type="button"
                                     onClick={() => togglePasswordVisibility(1)}
                                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
@@ -228,7 +230,7 @@ export default function ResetPasswordConfirmPage({ params }) {
                             </div>
                         </div>
                     </div>
-                    
+
                     {error && (
                         <div className="p-4 bg-red-100 border border-red-200 text-red-700 rounded-lg flex items-start">
                             <div className="flex-shrink-0">
@@ -241,14 +243,14 @@ export default function ResetPasswordConfirmPage({ params }) {
                             </div>
                         </div>
                     )}
-                    
-                    <button 
-                        type="submit" 
+
+                    <button
+                        type="submit"
                         disabled={isLoading || passwordScore < 2}
                         className={`w-full py-3 px-4 rounded-lg font-bold transition-all duration-300 flex items-center justify-center
                             ${isLoading || passwordScore < 2
                                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg'
+                                : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-md hover:shadow-lg'
                             }`}
                     >
                         {isLoading ? (
@@ -263,12 +265,12 @@ export default function ResetPasswordConfirmPage({ params }) {
                             'Reset Password'
                         )}
                     </button>
-                    
+
                     <div className="text-center mt-4">
                         <button
                             type="button"
                             onClick={() => router.push('/login')}
-                            className="text-indigo-600 hover:underline font-medium text-sm"
+                            className="text-emerald-600 hover:underline font-medium text-sm"
                         >
                             Back to Login
                         </button>

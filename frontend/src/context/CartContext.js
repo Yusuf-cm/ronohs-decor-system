@@ -13,32 +13,36 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [hydrated, setHydrated] = useState(false);
 
   // Load cart from localStorage on initial load (client-side only)
   useEffect(() => {
     try {
       const items = localStorage.getItem('cartItems');
       if (items) {
-        setCartItems(JSON.parse(items));
+        const parsed = JSON.parse(items);
+        setCartItems(Array.isArray(parsed) ? parsed.filter(item => item && item.id && Number.isFinite(Number(item.price)) && Number(item.price) >= 0 && Number.isSafeInteger(item.quantity) && item.quantity > 0) : []);
       }
     } catch (error) {
       console.error("Failed to parse cart items from localStorage", error);
       // Clear corrupted data
-      localStorage.removeItem('cartItems');
+      try { localStorage.removeItem('cartItems'); } catch { /* Storage unavailable. */ }
     }
+    setHydrated(true);
   }, []);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
     // Only run on client-side and after initial load
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    if (hydrated) {
+      try { localStorage.setItem('cartItems', JSON.stringify(cartItems)); } catch { /* Storage may be unavailable in private browsing. */ }
     }
-  }, [cartItems]);
+  }, [cartItems, hydrated]);
 
   // --- STEP 2: Wrap all functions in useCallback ---
 
   const addToCart = useCallback((product) => {
+    if (!product?.id || !Number.isFinite(Number(product.price)) || Number(product.price) < 0 || Number(product.stock) === 0) return;
     setCartItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === product.id);
       if (existingItem) {
@@ -58,6 +62,8 @@ export const CartProvider = ({ children }) => {
   const updateQuantity = useCallback((productId, quantity) => {
     // We need to reference `removeFromCart` inside, so we must make sure it's stable.
     // Since `removeFromCart` is now wrapped in useCallback, this is safe.
+    quantity = Number(quantity);
+    if (!Number.isSafeInteger(quantity)) return;
     if (quantity <= 0) {
       removeFromCart(productId);
     } else {
@@ -74,9 +80,9 @@ export const CartProvider = ({ children }) => {
 const clearCart = useCallback(() => {
   // 1. Update the React state to an empty array
   setCartItems([]);
-  
+
   // 2. Explicitly remove the item from localStorage immediately
-  localStorage.removeItem('cartItems');
+  try { localStorage.removeItem('cartItems'); } catch { /* Storage unavailable. */ }
 }, []); // The dependency array remains empty
 
   // --- STEP 3: Memoize the calculated total (optional but good practice) ---
@@ -85,6 +91,7 @@ const clearCart = useCallback(() => {
   // --- STEP 4: Define the context value ---
  const value = {
     cartItems,
+    hydrated,
     addToCart,
     removeFromCart,
     updateQuantity,
